@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import "./nativewind-output";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -11,22 +10,36 @@ const Stack = createStackNavigator();
 
 const Auth = () => {
   return (
-    <Stack.Navigator initialRouteName="LoginScreen">
-      <Stack.Screen name="LoginScreen" component={LoginScreen} />
-      <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+    <Stack.Navigator initialRouteName="RegistrationScreen">
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{ headerShown: false, title: "Login screen" }}
+      />
+      <Stack.Screen
+        name="RegistrationScreen"
+        component={RegistrationScreen}
+        options={{ headerShown: false, title: "Registration screen" }}
+      />
     </Stack.Navigator>
   );
 };
 
 export default function App() {
   return (
-    <View className="flex-1 items-center justify-center bg-grey">
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Auth">
-          <Stack.Screen name="Auth" component={Auth} />
-          <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Auth">
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
