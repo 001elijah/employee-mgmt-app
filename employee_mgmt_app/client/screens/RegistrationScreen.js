@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   TouchableOpacity,
   Text,
@@ -9,9 +10,12 @@ import {
 } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import EyeIcon from "../assets/icons/EyeIcon";
 
 const RegistrationScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  // const isAuthorized = useSelector(selectAuthorized);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +31,7 @@ const RegistrationScreen = ({ navigation }) => {
       password: password,
     };
     console.log("sumbit =>", JSON.stringify(newUserData, null, 2));
+    // dispatch(register(newUserData));
     setFullName("");
     setEmail("");
     setPassword("");
