@@ -4,15 +4,16 @@ import {
   Text,
   TextInput,
   View,
-  KeyboardAvoidingView,
-  Platform,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import EyeIcon from "../assets/icons/EyeIcon";
+
 const RegistrationScreen = ({ navigation }) => {
-  const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
 
@@ -20,19 +21,31 @@ const RegistrationScreen = ({ navigation }) => {
 
   const handleRegistrationSubmit = async () => {
     Keyboard.dismiss();
-    console.log("sumbit");
+    const newUserData = {
+      fullName: fullName,
+      email: email,
+      password: password,
+    };
+    console.log("sumbit =>", JSON.stringify(newUserData, null, 2));
+    setFullName("");
+    setEmail("");
+    setPassword("");
     // navigation.replace("LoginScreen");
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
+    <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={false}
       className="flex-1 bg-white"
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="px-5 flex-1 justify-start items-start">
-          <Text className="mt-48 mb-14 w-48 text-3xl">
+          <Text className="shrink mt-48 mb-14 w-48 text-3xl font-medium">
             Employer Registration
+          </Text>
+          <Text className="shrink mb-8 w-full text-xl text-slate-400">
+            Create an account as an <Text className="underline">employer</Text>
           </Text>
           <TextInput
             className="h-14 w-full mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
@@ -50,33 +63,23 @@ const RegistrationScreen = ({ navigation }) => {
           />
           <View className="w-full">
             <TextInput
-              className="h-14 mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
+              className="h-14 mb-20 pl-6 pr-11 border border-cyan-700/[.16] rounded-xl text-cyan-700"
               value={password}
               onChangeText={setPassword}
               placeholder="Password"
               blurOnSubmit={true}
               secureTextEntry={showPassword}
             />
-            {showPassword ? (
-              <TouchableOpacity
-                className="absolute top-5 right-4"
-                activeOpacity={0.5}
-                onPress={toggleShowPassword}
-              >
-                <Text>Show</Text>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                className="absolute top-5 right-4"
-                activeOpacity={0.5}
-                onPress={toggleShowPassword}
-              >
-                <Text>Hide</Text>
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              className="absolute items-center justify-center h-12 w-9 top-1 right-1"
+              activeOpacity={0.5}
+              onPress={toggleShowPassword}
+            >
+              <EyeIcon />
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
-            className="flex-2 items-center justify-center w-full h-14 mt-14 bg-sky-600 rounded-xl"
+            className="flex-2 items-center justify-center w-full h-14 bg-sky-600 rounded-xl"
             onPress={handleRegistrationSubmit}
           >
             <Text className="text-white text-lg font-medium">Sign up</Text>
@@ -91,7 +94,7 @@ const RegistrationScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
 
