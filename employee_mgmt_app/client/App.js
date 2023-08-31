@@ -18,7 +18,7 @@ const Auth = () => {
         component={LoginScreen}
         options={{ headerShown: false, title: "Login screen" }}
       />
-
+      
       <Stack.Screen
         name="RegistrationScreen"
         component={RegistrationScreen}
