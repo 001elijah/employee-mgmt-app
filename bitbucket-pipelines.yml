@@ -6,6 +6,6 @@ pipelines:
         clone:
           enabled: false
         script:
-          - git clone --bare git@bitbucket.org:"https://github.com/001elijah/my-team-repo"
+          - git clone --bare git@bitbucket.org:001elijah/my-team-repo
           - cd RepoName.git
-          - git push --mirror git@github.com:"https://github.com/001elijah/my-team-repo"
+          - git push --mirror git@github.com:001elijah/my-team-repo
