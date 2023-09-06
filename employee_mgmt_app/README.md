@@ -1,4 +1,4 @@
-# Welcome to employy_mgmt_app
+# Welcome to employee_mgmt_app
 
 ## How to run the server
 
@@ -24,8 +24,22 @@ To generate [requirements.txt] use command `pip freeze > requirements.txt`;
 
 To run project directly go to root folder and run `python3 __init__.py`;
 
-## Documentation
+## How to run the client
+
+run `npm i` to install all dependencies;
+
+run `npm start` to start the app;
+
+open your camera and scan the QR code you see at your console.
+
+### Documentation
+
+[Expo](https://docs.expo.dev/)
+
+[TailwindCSS] (https://www.nativewind.dev/quick-starts/expo)
 
 [pip](https://pypi.org/project/pip/)
+
 [Python3](https://www.python.org/downloads/)
+
 [Flask](https://flask.palletsprojects.com/en/2.0.x/installation/)
