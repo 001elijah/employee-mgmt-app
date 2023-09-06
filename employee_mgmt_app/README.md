@@ -36,7 +36,7 @@ open your camera and scan the QR code you see at your console.
 
 [Expo](https://docs.expo.dev/)
 
-[TailwindCSS] (https://www.nativewind.dev/quick-starts/expo)
+[TailwindCSS](https://www.nativewind.dev/quick-starts/expo)
 
 [pip](https://pypi.org/project/pip/)
 
