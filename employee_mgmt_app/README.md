@@ -18,6 +18,8 @@ run Flask: `virtualenv flask`, `cd flask`, `source bin/activate`, `cd..`;
 
 Set Flask environment: `export FLASK_APP=__init__.py`, `export FLASK_ENV=development` for dev mode or `export FLASK_ENV=production` for production mode;
 
+Before running the App migrate DB to Flask: `flask shell` => `from app import db` => `db.create_all()` => `quit() or exit()`
+
 Then run `flask run` to run the app;
 
 To generate [requirements.txt] use command `pip freeze > requirements.txt`;
