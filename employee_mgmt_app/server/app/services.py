@@ -17,7 +17,7 @@ def decode_token(token):
     return payload['sub']
 
 def hash_password(password):
-    return generate_password_hash(password, method='sha256')
+    return generate_password_hash(password, method='scrypt')
 
 def check_password(password, hashed_password):
     return check_password_hash(hashed_password, password)

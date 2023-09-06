@@ -21,7 +21,7 @@ class Signup(Resource):
         hashed_password = hash_password(password)
         user = User.query.filter_by(username=username).first()
         if user:
-            return {'message': 'User already exists'}, 400
+            return {"message": "User already exists"}, 400
         new_user = User(username=username, email=email, password=hashed_password, role=role)
         db.session.add(new_user)
         db.session.commit()
