@@ -4,7 +4,6 @@ import {
   loginUser,
   currentUser,
   logoutUser,
-  themeChangeUser,
   updateUser,
 } from "../operations/authOperations";
 
@@ -13,10 +12,8 @@ const authSlice = createSlice({
   initialState: {
     isAuth: false,
     token: null,
-    userName: null,
+    username: null,
     email: null,
-    theme: null,
-    avatarUrl: null,
     error: null,
   },
   reducers: {
@@ -24,10 +21,8 @@ const authSlice = createSlice({
       return {
         isAuth: false,
         token: null,
-        userName: null,
+        username: null,
         email: null,
-        theme: null,
-        avatarUrl: null,
         error: null,
       };
     },
@@ -59,10 +54,8 @@ const authSlice = createSlice({
         return {
           isAuth: false,
           token: null,
-          userName: null,
+          username: null,
           email: null,
-          theme: null,
-          avatarUrl: null,
           error: null,
         };
       })

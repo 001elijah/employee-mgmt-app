@@ -10,10 +10,10 @@ import {
 
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async (dataUser, { rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
-      const data = await registerUserApi(dataUser);
-      alert("Welcome");
+      const data = await registerUserApi(userData);
+      alert("You may proceed to login now");
       return data;
     } catch (error) {
       const { status } = error.response.request;
@@ -32,11 +32,11 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async (dataUser, { rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
-      const userData = await loginUserApi(dataUser);
+      const data = await loginUserApi(userData);
       alert("Welcome");
-      return userData;
+      return data;
     } catch (error) {
       const { status } = error.response.request;
       if (status === 401) {

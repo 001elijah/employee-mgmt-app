@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../redux/operations/authOperations";
 import {
   TouchableOpacity,
   Text,
@@ -15,7 +16,7 @@ import EyeIcon from "../assets/icons/EyeIcon";
 
 const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  // const isAuthorized = useSelector(selectAuthorized);
+  
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,16 +27,19 @@ const RegistrationScreen = ({ navigation }) => {
   const handleRegistrationSubmit = async () => {
     Keyboard.dismiss();
     const newUserData = {
-      fullName: fullName,
+      username: fullName,
       email: email,
       password: password,
+      role: "admin"
     };
-    console.log("sumbit =>", JSON.stringify(newUserData, null, 2));
-    // dispatch(register(newUserData));
+
+    dispatch(registerUser(newUserData));
+
     setFullName("");
     setEmail("");
     setPassword("");
-    // navigation.replace("LoginScreen");
+
+    navigation.replace("LoginScreen");
   };
 
   return (
