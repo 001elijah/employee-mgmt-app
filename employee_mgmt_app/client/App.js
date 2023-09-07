@@ -8,6 +8,10 @@ import RegistrationScreen from "./screens/RegistrationScreen";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 
+import ListScreen from "./screens/ListScreen";
+
+//import NavigationBar from "./screens/NavigationBar";
+
 const Stack = createStackNavigator();
 
 const Auth = () => {
@@ -23,6 +27,12 @@ const Auth = () => {
         name="RegistrationScreen"
         component={RegistrationScreen}
         options={{ headerShown: false, title: "Registration screen" }}
+      />
+
+      <Stack.Screen
+        name="ListScreen"
+        component={ListScreen}
+        options={{ headerShown: false, title: "List screen" }}
       />
     </Stack.Navigator>
   );

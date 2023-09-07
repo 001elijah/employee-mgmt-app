@@ -1,18 +1,20 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   TouchableOpacity, Text,
   TextInput, View,
-  Button, KeyboardAvoidingView,
-  Platform, TouchableWithoutFeedback,
-  Keyboard, Alert, StatusBar
+  TouchableWithoutFeedback, Keyboard,
+  Alert, StatusBar,
 } from "react-native";
+
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import EyeIcon from "../assets/icons/EyeIcon";
 
-import { useState } from "react";
-
 const LoginScreen = ({ navigation }) => {
+
   const [loginEmail, setLoginEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [hidePassword, setHidePassword] = useState(true);
   const toggleHidePassword = () => setHidePassword(!hidePassword);
 
@@ -22,53 +24,29 @@ const LoginScreen = ({ navigation }) => {
 
     console.log("Login attempt...");
 
-    //const password_controller = /^([A-Za-z0-9.@_{}-+]{8,65})$/.test(password);
-    //console.log("Password controller:  " + password_controller);
-  
     const email_controller = /^([A-Za-z0-9.@_-]{4,254})$/.test(loginEmail);
 
     console.log("Email controller status:  " + email_controller);
     
     console.log("Recieved e-mail: " + loginEmail);
-   
-    if (loginEmail.length === 0)
-    {
-      Alert.alert('Message', 'Please enter your e-mail adress'); 
-    }
+  
+    if (loginEmail.length === 0) { Alert.alert('Message', 'Please enter your e-mail adress'); }
 
-    else if (!loginEmail.includes("@"))
-    {
-      Alert.alert('Message', 'Valid e-mail must include an at sign (@)');
-    }
+    else if (!loginEmail.includes("@")) { Alert.alert('Message', 'Valid e-mail must include an at sign (@)'); }
 
-    else if (!loginEmail.includes("."))
-    {
-      Alert.alert('Message', 'E-mail must include one or more dots (.)');
-    }
+    else if (!loginEmail.includes(".")) { Alert.alert('Message', 'E-mail must include one or more dots'); }
 
-    else if (loginEmail.includes(" "))
-    {
-      Alert.alert('Message', 'E-mail must not include spaces');
-    }
+    else if (loginEmail.includes(" ")) { Alert.alert('Message', 'E-mail must not include spaces'); }
 
-    else if (email_controller === false)
-    {
-      Alert.alert('Message', 'E-mail adress not valid. Please check if it is written correctly');
-    }
+    else if (email_controller === false) { Alert.alert('Message', 'E-mail adress not valid. Please check if it is written correctly'); }
 
     else if (email_controller === true)
     {
       console.log("E-mail was approved, checking password...");
 
-      if (password.length === 0)
-      {
-        Alert.alert('Message', 'Please enter your password');
-      }
+      if (password.length === 0) { Alert.alert('Message', 'Please enter your password'); }
 
-      else if (password.length < 8)
-      {
-        Alert.alert('Message', 'Your app password should be 8 should be characters or more');
-      }
+      else if (password.length < 8) { Alert.alert('Message', 'Your app password should be 8 should be characters or more'); }
 
       else if (password.length >= 8 && password == "Password")
       {
@@ -78,70 +56,78 @@ const LoginScreen = ({ navigation }) => {
         setPassword("");
       }
 
-      else
-      {
-        Alert.alert('Message', 'Wrong e-mail or password');
-      }
+      else { Alert.alert('Message', 'Wrong e-mail or password'); }
     } 
+ };
+
+  const handlePasswordReset = async () => 
+  {
+    Keyboard.dismiss();
+    Alert.alert('Message', 'Password reset');
   };
-  
-  
 
   return (
-    <View className="flex-1 items-center justify-center bg-grey">
+    <KeyboardAwareScrollView
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={false}
+      className="flex-1 bg-white"
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-      <Text className="text-black text-4xl right-20 bottom-40 font-bold">Login</Text>
-      <Text className="text-gray-500 text-xl right-12 bottom-5">Sign in to your account</Text>
-     
+        <View className="px-5 flex-1 justify-start items-start bottom-1">
+
+          <Text className="right-px shrink mt-40 mb-16 w-48 text-3xl font-bold text-4xl">Login</Text>
+
+          <Text className="shrink mb-8 mt-4 w-full text-2xl text-slate-400">Sign in to your account</Text>
 
           <TextInput
-            className="h-14 w-4/5 mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
+            className="h-14 w-full mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
             value={loginEmail}
             onChangeText={setLoginEmail}
             placeholder="Example@luday.se"
-            blurOnSubmit={true}>
-          </TextInput>
+            blurOnSubmit={true}
+          />
 
-          <View className="w-4/5">
+          <View className="w-full">
+            
             <TextInput
-              className="h-14 mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
-              secureTextEntry={hidePassword}
+              className="h-14 mb-20 pl-6 pr-11 border border-cyan-700/[.16] rounded-xl text-cyan-700"
               value={password}
-              onChangeText={setPassword} 
+              onChangeText={setPassword}
               placeholder="Password"
               blurOnSubmit={true}
+              secureTextEntry={hidePassword}
             />
 
-            {hidePassword ? (
-              <TouchableOpacity
-                className="absolute top-5 right-4"
-                activeOpacity={0.5}
-                onPress={toggleHidePassword}
-              >
-                <EyeIcon />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                className="absolute top-5 right-4"
-                activeOpacity={0.5}
-                onPress={toggleHidePassword}
-              >
-                <Text>Display</Text>
-              </TouchableOpacity>
-            )}
-          </View>   
+            <TouchableOpacity
+              className="absolute items-center justify-center h-12 w-9 top-1 right-1"
+              activeOpacity={0.5}
+              onPress={toggleHidePassword}
+            >
+              <EyeIcon />
+            </TouchableOpacity>
 
-        <TouchableOpacity
-            className="flex-2 items-center justify-center w-4/5 h-11 mt-3 bg-sky-600 rounded-xl"
-            onPress={handleLoginAttempt}>
-            <Text className="text-white text-lg font-medium">Login</Text>
-        </TouchableOpacity>
+          </View>
 
-      <Text className="text-sky-600 right-15 mt-4">Forgot password?</Text>
 
-      <Text onPress={() => navigation.navigate("RegistrationScreen")} className="text-sky-600 right-15 top-40" >Dont have an account? Join Us</Text>
+          <TouchableOpacity className="bottom-10 flex-2 items-center justify-center w-full h-14 bg-sky-600 rounded-xl" onPress={handleLoginAttempt}>
+            <Text className="text-white text-xl font-medium">Login</Text>
+          </TouchableOpacity>
 
-    </View>
+          <TouchableOpacity className="mx-auto bg-transparent bottom-4" onPress={handlePasswordReset}>    
+            <Text className="text-sky-600 text-lg text-base">Forgot Password?</Text>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity className="mx-auto bg-transparent mt-5 mt-14" onPress={() => navigation.navigate("RegistrationScreen")}>
+            <Text className="text-sky-600 text-lg text-base mt-7">Don't have an account? Join us</Text>
+          </TouchableOpacity>
+
+        </View>
+
+      </TouchableWithoutFeedback>
+
+    </KeyboardAwareScrollView>
   );
 };
 
