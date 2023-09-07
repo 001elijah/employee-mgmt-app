@@ -26,6 +26,19 @@ To generate [requirements.txt] use command `pip freeze > requirements.txt`;
 
 To run project directly go to root folder and run `python3 __init__.py`;
 
+## Set up Ngrok before running the client
+
+**Explanation from Illia:** *The issue was that Expo app runs on /192.168.0.100:8081, and server runs on http://127.0.0.1:5000/*
+*And when I fetch from Expo App to localhost it doesn't see the server there*
+*Because the App runs on one device, and the server runs on my laptop*
+*Ngrok is the tool to connect two different localhosts*
+*It provides a middleware address, which I use on client to fetch data, and redirects to my localhost 5000*
+*that's it*
+
+Follow [Ngrok guide](https://ngrok.com/docs/getting-started/) steps (first 4 steps enough).
+After you have **Ngrok** up and running, go to **backendAPI.js**, and put Ngrok URI to **axios.defaults.baseURL**.
+**Example:** *axios.defaults.baseURL = "https://f4d6-91-90-11-228.ngrok-free.app";*
+
 ## How to run the client
 
 run `npm i` to install all dependencies;
