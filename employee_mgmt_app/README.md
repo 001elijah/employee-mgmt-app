@@ -6,9 +6,9 @@ to run the server locally, download or clone the repo, go to `cd employee_mgmt_a
 
 run `python -m venv env`;
 
-run `source env/bin/activate`;
+run `source env/bin/activate` (windows: `. env\scripts\activate`);
 
-run `pip list`;
+run `pip list` (windows: `python.exe -m pip install --upgrade pip`);
 
 (optional) run `pip install --upgrade pip`;
 
@@ -16,7 +16,7 @@ run `pip3 install -r requirements.txt` to install all dependencies.
 
 run Flask: `virtualenv flask`, `cd flask`, `source bin/activate`, `cd..`;
 
-Set Flask environment: `export FLASK_APP=__init__.py`, `export FLASK_ENV=development` for dev mode or `export FLASK_ENV=production` for production mode;
+Set Flask environment: `export FLASK_APP=__init__.py` (windows: `set FLASK_APP=__init.py`), `export FLASK_ENV=development` (windows: `set FLASK_ENV=development`) for dev mode or `export FLASK_ENV=production` (windows: `set FLASK_ENV=production`) for production mode;
 
 Before running the App migrate DB to Flask: `flask shell` => `from app import db` => `db.create_all()` => `quit() or exit()`
 
