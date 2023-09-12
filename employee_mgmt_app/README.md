@@ -1,6 +1,6 @@
 # Welcome to employee_mgmt_app
 
-## How to run the server
+## How to run the server (**MacOS**)
 
 to run the server locally, download or clone the repo, go to `cd employee_mgmt_app/server/app`;
 
@@ -25,6 +25,28 @@ Then run `flask run` to run the app;
 To generate [requirements.txt] use command `pip freeze > requirements.txt`;
 
 To run project directly go to root folder and run `python3 __init__.py`;
+
+## How to run the server (**Windows**)
+
+to run the server locally, download or clone the repo, go to `cd employee_mgmt_app/server/app`;
+
+run `py -3 -m venv .venv`;
+
+run `. env\scripts\activate`;
+
+run `pip list` (**windows**: `python.exe -m pip install --upgrade pip`);
+
+run `pip3 install -r requirements.txt` to install all dependencies.
+
+run `pip install Flask`;
+
+Set Flask environment: `set FLASK_APP=__init__.py`, `set FLASK_ENV=development` for dev mode or `set FLASK_ENV=production` for production mode;
+
+Before running the App migrate DB to Flask: `flask shell` => `from app import db` => `db.create_all()` => `quit() or exit()`
+
+to run Flask: `python -m flask` or `flask --app __init__.py run`
+
+To generate [requirements.txt] use command `pip freeze > requirements.txt`;
 
 ## Set up Ngrok before running the client
 
