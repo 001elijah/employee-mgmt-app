@@ -32,7 +32,7 @@ to run the server locally, download or clone the repo, go to `cd employee_mgmt_a
 
 run `py -3 -m venv .venv`;
 
-run `. env\scripts\activate`;
+run `. env\scripts\activate    or    . venv\scripts\activate`;
 
 run `pip list` (**windows**: `python.exe -m pip install --upgrade pip`);
 
@@ -42,7 +42,7 @@ run `pip install Flask`;
 
 Set Flask environment: `set FLASK_APP=__init__.py`, `set FLASK_ENV=development` for dev mode or `set FLASK_ENV=production` for production mode;
 
-Before running the App migrate DB to Flask: `flask shell` => `from app import db` => `db.create_all()` => `quit() or exit()`
+Before running the App migrate DB to Flask: `flask shell` (or `flask --app __init__.py shell" on windows`) => `from app import db` => `db.create_all()` => `quit() or exit()`
 
 to run Flask: `python -m flask` or `flask --app __init__.py run`
 

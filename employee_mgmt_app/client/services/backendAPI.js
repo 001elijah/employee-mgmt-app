@@ -3,7 +3,7 @@ import axios from "axios";
 // axios.defaults.baseURL = "https://baseURL.com";
 
 // axios.defaults.baseURL = "http://127.0.0.1:5000";
-axios.defaults.baseURL = "https://f4d6-91-90-11-228.ngrok-free.app";
+axios.defaults.baseURL = "https://ee66-78-71-172-166.ngrok-free.app";  
 
 const token = {
   set(token) {
@@ -20,8 +20,11 @@ export const registerUserApi = async (userData) => {
 };
 
 export const loginUserApi = async (userData) => {
+
+  console.log(userData);
+
   const { data } = await axios.post("/auth/login", userData);
-  const user = await currentUserApi(data.token);
+  //const user = await currentUserApi(data.token);
   return { ...user, token: data.token };
 };
 

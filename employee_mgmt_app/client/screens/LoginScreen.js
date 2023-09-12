@@ -11,8 +11,18 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 import EyeIcon from "../assets/icons/EyeIcon";
 
+import { loginUser } from "../redux/operations/authOperations";
+
+
+
+
+
+
+
+
 const LoginScreen = ({ navigation }) => {
 
+  const dispatch = useDispatch();
   const [loginEmail, setLoginEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
@@ -29,12 +39,18 @@ const LoginScreen = ({ navigation }) => {
     console.log("Email controller status:  " + email_controller);
     
     console.log("Recieved e-mail: " + loginEmail);
+
+    //const newLoginEmail = loginEmail.toLowerCase();
+
+    //console.log("Recieved e-mail: " + newLoginEmail + " " + "(Length: " + newLoginEmail.length + ")");
   
-    if (loginEmail.length === 0) { Alert.alert('Message', 'Please enter your e-mail adress'); }
+    if (loginEmail.length === 0 && password.length === 0) { Alert.alert('Message', 'Please enter your login credentials'); }
+    
+    else if (loginEmail.length === 0) { Alert.alert('Message', 'Please enter your e-mail adress'); }
 
     else if (!loginEmail.includes("@")) { Alert.alert('Message', 'Valid e-mail must include an at sign (@)'); }
 
-    else if (!loginEmail.includes(".")) { Alert.alert('Message', 'E-mail must include one or more dots'); }
+    else if (!loginEmail.includes(".")) { Alert.alert('Message', 'E-mail should include one or more dots'); }
 
     else if (loginEmail.includes(" ")) { Alert.alert('Message', 'E-mail must not include spaces'); }
 
@@ -46,14 +62,15 @@ const LoginScreen = ({ navigation }) => {
 
       if (password.length === 0) { Alert.alert('Message', 'Please enter your password'); }
 
-      else if (password.length < 8) { Alert.alert('Message', 'Your app password should be 8 should be characters or more'); }
+      else if (password.length < 8) { Alert.alert('Message', 'Your app password should consist of 8 characters or more'); }
 
-      else if (password.length >= 8 && password == "Password")
+      else if (password.length >= 8)
       {
+
         console.log("Checking database....");
-        navigation.navigate("HomeScreen");
-        setLoginEmail("");
-        setPassword("");
+
+        handleLoginSubmit();
+
       }
 
       else { Alert.alert('Message', 'Wrong e-mail or password'); }
@@ -65,6 +82,32 @@ const LoginScreen = ({ navigation }) => {
     Keyboard.dismiss();
     Alert.alert('Message', 'Password reset');
   };
+
+
+  
+
+
+
+  const handleLoginSubmit = async () => {
+    
+    console.log("Submitting to database...");
+
+    const loginData = 
+    {
+      email: loginEmail,
+      password: password,
+    };
+  
+    dispatch(loginUser(loginData));
+  
+    //setLoginEmail("");
+    //setPassword("");
+  
+    //navigation.replace("HomeScreen");
+  };
+
+
+
 
   return (
     <KeyboardAwareScrollView
