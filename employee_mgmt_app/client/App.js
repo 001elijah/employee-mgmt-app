@@ -9,8 +9,7 @@ import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 
 import ListScreen from "./screens/ListScreen";
-
-//import NavigationBar from "./screens/NavigationBar";
+import Home from "./screens/Home";
 
 const Stack = createStackNavigator();
 
@@ -43,15 +42,15 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Auth">
+          <Stack.Navigator initialRouteName="Home">
             <Stack.Screen
               name="Auth"
               component={Auth}
               options={{ headerShown: false }}
             />
             <Stack.Screen
-              name="HomeScreen"
-              component={HomeScreen}
+              name="Home"
+              component={Home}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
