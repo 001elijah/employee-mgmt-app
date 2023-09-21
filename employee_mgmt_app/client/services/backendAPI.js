@@ -1,9 +1,6 @@
 import axios from "axios";
 
-// axios.defaults.baseURL = "https://baseURL.com";
-
-// axios.defaults.baseURL = "http://127.0.0.1:5000";
-axios.defaults.baseURL = "https://ee66-78-71-172-166.ngrok-free.app";  
+axios.defaults.baseURL = "https://ae12-91-90-11-228.ngrok-free.app";
 
 const token = {
   set(token) {
@@ -20,27 +17,23 @@ export const registerUserApi = async (userData) => {
 };
 
 export const loginUserApi = async (userData) => {
-
-  console.log(userData);
-
   const { data } = await axios.post("/auth/login", userData);
-  //const user = await currentUserApi(data.token);
-  return { ...user, token: data.token };
+  return data;
 };
 
 export const currentUserApi = async (userToken) => {
   token.set(userToken);
-  const { data } = await axios.get("/user/current");
+  const { data } = await axios.get("/auth/current");
   return data;
 };
 
 export const logoutUserApi = async (userToken) => {
-  await axios.post("/user/logout", userToken);
+  await axios.post("/auth/logout", userToken);
   token.unset();
   return null;
 };
 
 export const updateUserApi = async (userData) => {
-  const { data } = await axios.patch("/user/updateUserInfo", userData);
+  const { data } = await axios.patch("/auth/updateUserInfo", userData);
   return data.user;
 };

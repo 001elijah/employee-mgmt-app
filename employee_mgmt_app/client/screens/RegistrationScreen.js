@@ -16,7 +16,7 @@ import EyeIcon from "../assets/icons/EyeIcon";
 
 const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,16 +30,16 @@ const RegistrationScreen = ({ navigation }) => {
       username: fullName,
       email: email,
       password: password,
-      role: "admin"
+      role: "admin",
     };
 
     dispatch(registerUser(newUserData));
 
-    setFullName("");
-    setEmail("");
-    setPassword("");
+    //setFullName("");
+    //setEmail("");
+    //setPassword("");
 
-    navigation.replace("LoginScreen");
+    //navigation.replace("LoginScreen");
   };
 
   return (
@@ -49,7 +49,6 @@ const RegistrationScreen = ({ navigation }) => {
       className="flex-1 bg-white"
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-
         <View className="px-5 flex-1 justify-start items-start bottom-4">
           <Text className="shrink mt-48 mb-14 w-48 text-4xl font-medium">
             Employer Registration
@@ -68,6 +67,7 @@ const RegistrationScreen = ({ navigation }) => {
             className="h-14 w-full mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
             value={email}
             onChangeText={setEmail}
+            autoCapitalize="none"
             placeholder="Email"
             blurOnSubmit={true}
           />
@@ -76,6 +76,7 @@ const RegistrationScreen = ({ navigation }) => {
               className="h-14 mb-20 pl-6 pr-11 border border-cyan-700/[.16] rounded-xl text-cyan-700"
               value={password}
               onChangeText={setPassword}
+              autoCapitalize="none"
               placeholder="Password"
               blurOnSubmit={true}
               secureTextEntry={showPassword}

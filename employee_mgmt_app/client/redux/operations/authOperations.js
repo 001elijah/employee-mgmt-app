@@ -8,22 +8,30 @@ import {
   updateUserApi,
 } from "../../services/backendAPI";
 
+import { Alert } from "react-native";
+
 export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData, { rejectWithValue }) => {
     try {
       const data = await registerUserApi(userData);
-      alert("You may proceed to login now");
+
+      Alert.alert(
+        "Registration successful",
+        "Your account has been created! You may proceed to login now.",
+      );
+
       return data;
     } catch (error) {
       const { status } = error.response.request;
 
       if (status === 409) {
-        alert("Email already exists");
-      } else if (status === 400) {
-        alert(`Error`);
-      } else if (status === 500) {
-        alert("Server error");
+        Alert.alert("Message", "This e-mail address is already registered.");
+      } else {
+        Alert.alert(
+          "Message",
+          "A problem has occurred, please try again later",
+        );
       }
       return rejectWithValue(error.message);
     }
@@ -35,18 +43,19 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const data = await loginUserApi(userData);
-      alert("Welcome");
       return data;
     } catch (error) {
       const { status } = error.response.request;
-      if (status === 401) {
-        alert("Email or password is wrong");
+      if (status === 404) {
+        alert("User not found");
       } else if (status === 400) {
-        alert(`Error`);
-      } else if (status === 500) {
-        alert("Server error");
+        alert("Wrong password");
+      } else {
+        Alert.alert(
+          "Message",
+          "A problem has occurred, please try again later",
+        );
       }
-
       return rejectWithValue(error.message);
     }
   },

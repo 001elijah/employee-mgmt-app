@@ -1,19 +1,25 @@
 import "./nativewind-output";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import RegistrationScreen from "./screens/RegistrationScreen";
 import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
 
-import ListScreen from "./screens/ListScreen";
 import Home from "./screens/Home";
+import { selectIsAuth } from "./redux/selectors/authSelectors";
+import { useEffect } from "react";
 
 const Stack = createStackNavigator();
 
-const Auth = () => {
+const Auth = ({ navigation }) => {
+  const isAuthorized = useSelector(selectIsAuth);
+
+  useEffect(() => {
+    isAuthorized && navigation.replace("Home");
+  }, [isAuthorized]);
+
   return (
     <Stack.Navigator initialRouteName="RegistrationScreen">
       <Stack.Screen
@@ -21,17 +27,10 @@ const Auth = () => {
         component={LoginScreen}
         options={{ headerShown: false, title: "Login screen" }}
       />
-      
       <Stack.Screen
         name="RegistrationScreen"
         component={RegistrationScreen}
         options={{ headerShown: false, title: "Registration screen" }}
-      />
-
-      <Stack.Screen
-        name="ListScreen"
-        component={ListScreen}
-        options={{ headerShown: false, title: "List screen" }}
       />
     </Stack.Navigator>
   );
@@ -42,7 +41,7 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="RegistrationScreen">
             <Stack.Screen
               name="Auth"
               component={Auth}

@@ -16,14 +16,14 @@ import authReducer from "./slices/authSlice";
 const authPersistConfig = {
   key: "token",
   storage: AsyncStorage,
-  whitelist: ["token", "refreshToken", "user"],
+  whitelist: ["token"],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    authorized: persistedAuthReducer,
+    auth: persistedAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

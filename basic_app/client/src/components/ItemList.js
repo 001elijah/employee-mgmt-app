@@ -4,7 +4,6 @@ import useFetch from '../hooks/useFetch';
 const ItemList = () => {
   const { users } = useFetch('http://127.0.0.1:5000/get');
 
-  console.log(users);
   return (
     <div className=' flex items-center place-content-center flex-col'>
       {users &&

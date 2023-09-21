@@ -7,7 +7,7 @@ const Login = () => {
   const [name, setName] = useState('');
   const dispatch = useDispatch();
   const { isLogin } = useSelector((state) => state.user);
-  //console.log(user);
+
   const handleClick = (e) => {
     e.preventDefault();
     dispatch(login(name));

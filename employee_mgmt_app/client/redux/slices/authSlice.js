@@ -10,7 +10,6 @@ import {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isAuth: false,
     token: null,
     username: null,
     email: null,
@@ -19,7 +18,6 @@ const authSlice = createSlice({
   reducers: {
     logOut() {
       return {
-        isAuth: false,
         token: null,
         username: null,
         email: null,
@@ -33,26 +31,22 @@ const authSlice = createSlice({
         return {
           ...state,
           ...payload,
-          isAuth: true,
         };
       })
       .addCase(loginUser.fulfilled, (state, { payload }) => {
         return {
           ...state,
           ...payload,
-          isAuth: true,
         };
       })
       .addCase(currentUser.fulfilled, (state, { payload }) => {
         return {
           ...state,
           ...payload,
-          isAuth: true,
         };
       })
       .addCase(logoutUser.fulfilled, () => {
         return {
-          isAuth: false,
           token: null,
           username: null,
           email: null,
