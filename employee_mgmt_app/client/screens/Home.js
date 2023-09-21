@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./HomeScreen";
 import HistoryScreen from "./HistoryScreen";
@@ -7,10 +7,18 @@ import HomeIcon from "../assets/icons/HomeIcon";
 import BookIcon from "../assets/icons/BookIcon";
 import MessageIcon from "../assets/icons/MessageIcon";
 import { View } from "react-native";
+import { useSelector } from "react-redux";
+import { selectIsAuth } from "../redux/selectors/authSelectors";
 
 const Tab = createBottomTabNavigator();
 
-const Home = () => {
+const Home = ({ navigation }) => {
+  const isAuthorized = useSelector(selectIsAuth);
+
+  useEffect(() => {
+    !isAuthorized && navigation.replace("Auth");
+  }, [isAuthorized]);
+
   return (
     <Tab.Navigator
       initialRouteName={"HomeScreen"}

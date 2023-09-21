@@ -27,11 +27,11 @@ export const currentUserApi = async (userToken) => {
   return data;
 };
 
-export const logoutUserApi = async (userToken) => {
-  await axios.post("/auth/logout", userToken);
-  token.unset();
-  return null;
-};
+// export const logoutUserApi = async (userToken) => {
+//   await axios.post("/auth/logout", userToken);
+//   token.unset();
+//   return null;
+// };
 
 export const updateUserApi = async (userData) => {
   const { data } = await axios.patch("/auth/updateUserInfo", userData);

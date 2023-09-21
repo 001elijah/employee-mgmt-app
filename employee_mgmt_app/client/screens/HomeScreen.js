@@ -1,11 +1,30 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../redux/operations/authOperations";
+import { selectToken } from "../redux/selectors/authSelectors";
+import SignoutIcon from "../assets/icons/SignoutIcon";
 
 const HomeScreen = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+
+  const handleLogout = () => {
+    if (token) dispatch(logoutUser());
+  };
+
   return (
     <>
       <View className="w-full h-[357px] items-center rounded-b-[30px] bg-[#2578CC]">
-        <View className="w-1/2 h-10 mt-[57px] items-center justify-center rounded-full bg-white h-36 w-36">
+        <TouchableOpacity
+          className="mt-[61px] ml-[20px] mr-auto flex-row"
+          activeOpacity={0.5}
+          onPress={handleLogout}
+        >
+          <SignoutIcon />
+          <Text className="ml-1 text-white text-xs font-medium">sign out</Text>
+        </TouchableOpacity>
+        <View className="w-1/2 h-10 items-center justify-center rounded-full bg-white h-36 w-36">
           <Text className="font-semibold text-7xl color-gray-400 top-1">J</Text>
         </View>
         <Text className="mt-[28px] text-3xl font-semibold text-[#FFF]">

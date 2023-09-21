@@ -15,16 +15,6 @@ const authSlice = createSlice({
     email: null,
     error: null,
   },
-  reducers: {
-    logOut() {
-      return {
-        token: null,
-        username: null,
-        email: null,
-        error: null,
-      };
-    },
-  },
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.fulfilled, (state, { payload }) => {

@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   registerUserApi,
   loginUserApi,
-  logoutUserApi,
   currentUserApi,
   updateUserApi,
 } from "../../services/backendAPI";
@@ -99,11 +98,11 @@ export const updateUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk(
   "auth/logout",
-  async (token, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      await logoutUserApi(token);
       return null;
     } catch (error) {
+      alert(error.message);
       return rejectWithValue(error.message);
     }
   },
