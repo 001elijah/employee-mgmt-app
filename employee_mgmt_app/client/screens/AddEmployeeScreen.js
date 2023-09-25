@@ -14,7 +14,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 import EyeIcon from "../assets/icons/EyeIcon";
 
-const RegistrationScreen = ({ navigation }) => {
+const AddEmployeeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [fullName, setFullName] = useState("");
@@ -30,14 +30,13 @@ const RegistrationScreen = ({ navigation }) => {
       username: fullName,
       email: email,
       password: password,
-      role: "admin",
+      role: "subadmin",
     };
 
     dispatch(registerUser(newUserData));
     setFullName("");
     setEmail("");
     setPassword("");
-    navigation.replace("LoginScreen");
   };
 
   return (
@@ -47,18 +46,17 @@ const RegistrationScreen = ({ navigation }) => {
       className="flex-1 bg-white"
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="px-5 flex-1 justify-start items-start bottom-4">
+        <View className="px-5 flex-1 justify-start items-start bottom-32">
           <Text className="shrink mt-48 mb-14 w-48 text-4xl font-medium">
-            Employer Registration
+            Add employee
           </Text>
-          <Text className="shrink mb-8 w-full text-xl text-slate-400">
-            Create an account as an <Text className="underline">employer</Text>
-          </Text>
+          <Text className="shrink mb-8 w-full text-xl text-slate-400">Create accounts for your employees here</Text>
+
           <TextInput
             className="h-14 w-full mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
             value={fullName}
             onChangeText={setFullName}
-            placeholder="Full name"
+            placeholder="Employee name"
             blurOnSubmit={true}
           />
           <TextInput
@@ -66,7 +64,7 @@ const RegistrationScreen = ({ navigation }) => {
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
-            placeholder="Email"
+            placeholder="Employee e-mail"
             blurOnSubmit={true}
           />
           <View className="w-full">
@@ -91,20 +89,13 @@ const RegistrationScreen = ({ navigation }) => {
             className="flex-2 items-center justify-center w-full h-14 bg-sky-600 rounded-xl"
             onPress={handleRegistrationSubmit}
           >
-            <Text className="text-white text-lg font-medium">Sign up</Text>
+            <Text className="text-white text-lg font-medium">Add account</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            className="mx-auto bg-transparent mt-5"
-            onPress={() => navigation.navigate("LoginScreen")}
-          >
-            <Text className="text-sky-600 text-lg text-base">
-              Have an account? Log in
-            </Text>
-          </TouchableOpacity>
+       
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
   );
 };
 
-export default RegistrationScreen;
+export default AddEmployeeScreen;

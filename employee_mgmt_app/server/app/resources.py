@@ -1,5 +1,4 @@
 from flask_restx import Resource, Namespace
-from werkzeug.security import generate_password_hash, check_password_hash
 from .services import generate_token, hash_password, check_password
 from .models import User
 from .extensions import db, api

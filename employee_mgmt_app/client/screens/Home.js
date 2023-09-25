@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./HomeScreen";
 import HistoryScreen from "./HistoryScreen";
 import MessagesScreen from "./MessagesScreen";
+import CreateEmployeeScreen from "./AddEmployeeScreen";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BookIcon from "../assets/icons/BookIcon";
 import MessageIcon from "../assets/icons/MessageIcon";
@@ -89,6 +90,33 @@ const Home = ({ navigation }) => {
           tabBarShowLabel: false,
         }}
       />
+
+<Tab.Screen
+        name="CreateEmployeeScreen"
+        component={CreateEmployeeScreen}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              className={`w-12 h-12 rounded-full ${
+                focused ? "bg-[#2578CC]" : "bg-[#FFF]"
+              } items-center justify-center`}
+            >
+              <MessageIcon fill={color} />
+            </View>
+          ),
+          title: "Create",
+          tabBarShowLabel: false,
+        }}
+      />
+
+
+
+
+
+
+
+
+
     </Tab.Navigator>
   );
 };
