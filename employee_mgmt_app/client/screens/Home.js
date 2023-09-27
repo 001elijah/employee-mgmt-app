@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./HomeScreen";
 import HistoryScreen from "./HistoryScreen";
 import MessagesScreen from "./MessagesScreen";
-import CreateEmployeeScreen from "./AddEmployeeScreen";
+import AddEmployeeScreen from "./AddEmployeeScreen";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BookIcon from "../assets/icons/BookIcon";
 import MessageIcon from "../assets/icons/MessageIcon";
-import { Platform, View } from "react-native";
+import { Platform, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "../redux/selectors/authSelectors";
 
@@ -29,7 +29,7 @@ const Home = ({ navigation }) => {
         tabBarInactiveTintColor: "#858EA9",
         tabBarStyle: {
           position: 'absolute',
-          height: 68,
+          height: 84,
           paddingTop: 3,
           alignItems: "center",
           justifyContent: "space-around",
@@ -94,8 +94,8 @@ const Home = ({ navigation }) => {
       />
 
 <Tab.Screen
-        name="CreateEmployeeScreen"
-        component={CreateEmployeeScreen}
+        name="AddEmployeeScreen"
+        component={AddEmployeeScreen}
         headerShown={false}
         options={{
           tabBarIcon: ({ color, focused }) => (
@@ -104,7 +104,13 @@ const Home = ({ navigation }) => {
                 focused ? "bg-[#2578CC]" : "bg-[#FFF]"
               } items-center justify-center`}
             >
-              <MessageIcon fill={color} />
+              <Text
+                className={`text-4xl ${
+                  focused ? "text-white" : "text-grey"
+                }`}
+              >
+                +
+              </Text>
             </View>
           ),
           title: "",

@@ -3,7 +3,11 @@ const nativewind = require("nativewind/tailwind/css");
 module.exports = {
   content: ["./components/**/*.js", "./screens/**/*.js", "./App.js"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        grey: "#858EA9",
+      },
+    },
   },
   plugins: [nativewind],
 };

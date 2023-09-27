@@ -9,7 +9,7 @@ pymysql.install_as_MySQLdb()
 def create_app():
     app = Flask(__name__)
     CORS(app)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/database01'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/employee-mgmt-app'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     api.init_app(app)
     db.init_app(app)

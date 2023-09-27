@@ -43,14 +43,16 @@ const AddEmployeeScreen = ({ navigation }) => {
     <KeyboardAwareScrollView
       resetScrollToCoords={{ x: 0, y: 0 }}
       scrollEnabled={false}
-      className="flex-1 bg-white"
+      className="flex-1"
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="px-5 flex-1 justify-start items-start bottom-32">
           <Text className="shrink mt-48 mb-14 w-48 text-4xl font-medium">
             Add employee
           </Text>
-          <Text className="shrink mb-8 w-full text-xl text-slate-400">Create accounts for your employees here</Text>
+          <Text className="shrink mb-8 w-full text-xl text-slate-400">
+            Create accounts for your employees here
+          </Text>
 
           <TextInput
             className="h-14 w-full mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
@@ -91,7 +93,6 @@ const AddEmployeeScreen = ({ navigation }) => {
           >
             <Text className="text-white text-lg font-medium">Add account</Text>
           </TouchableOpacity>
-       
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
