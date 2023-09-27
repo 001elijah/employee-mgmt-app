@@ -7,7 +7,7 @@ import CreateEmployeeScreen from "./AddEmployeeScreen";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BookIcon from "../assets/icons/BookIcon";
 import MessageIcon from "../assets/icons/MessageIcon";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { useSelector } from "react-redux";
 import { selectIsAuth } from "../redux/selectors/authSelectors";
 
@@ -24,11 +24,13 @@ const Home = ({ navigation }) => {
     <Tab.Navigator
       initialRouteName={"HomeScreen"}
       screenOptions={{
+        tabBarHideOnKeyboard: Platform.OS !== 'ios',
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#858EA9",
         tabBarStyle: {
-          height: 84,
-          paddingTop: 27,
+          position: 'absolute',
+          height: 68,
+          paddingTop: 3,
           alignItems: "center",
           justifyContent: "space-around",
           border: "none",
@@ -94,6 +96,7 @@ const Home = ({ navigation }) => {
 <Tab.Screen
         name="CreateEmployeeScreen"
         component={CreateEmployeeScreen}
+        headerShown={false}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <View
@@ -104,19 +107,10 @@ const Home = ({ navigation }) => {
               <MessageIcon fill={color} />
             </View>
           ),
-          title: "Create",
+          title: "",
           tabBarShowLabel: false,
         }}
       />
-
-
-
-
-
-
-
-
-
     </Tab.Navigator>
   );
 };

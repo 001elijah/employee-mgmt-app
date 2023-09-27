@@ -36,39 +36,25 @@ const LoginScreen = ({ navigation }) => {
     const email_controller2 = /^([A-Za-z0-9]{1,1})$/.test(firstChar);
     const email_controller3 = /^([A-Za-z0-9]{1,1})$/.test(lastChar);
 
-    if (loginEmail.length === 0 && password.length === 0) {
-      Alert.alert("Message", "Please enter your login credentials");
-    } else if (loginEmail.length === 0) {
-      Alert.alert("Message", "Please enter your e-mail adress");
-    } else if (
-      !loginEmail.includes("@") ||
-      !loginEmail.includes(".") ||
-      loginEmail.includes(" ") ||
-      !email_controller ||
-      !email_controller2 ||
-      !email_controller3
-    ) {
-      Alert.alert(
-        "Message",
-        "E-mail adress not valid. Please check if it is written correctly",
-      );
-    } else {
-      if (password.length === 0) {
-        Alert.alert("Message", "Please enter your password");
-      } else {
-        //navigation.navigate("HomeScreen");
-        //Alert.alert('Message', 'Success');
-        //setEmailInput("");
-        //setPassword("");
-
+    if (loginEmail.length === 0 && password.length === 0) { Alert.alert("Message", "Please enter your login credentials"); } 
+    
+    else if (loginEmail.length === 0) { Alert.alert("Message", "Please enter your e-mail adress"); } 
+    
+    else if (!loginEmail.includes("@") || !loginEmail.includes(".") || loginEmail.includes(" ") || !email_controller || !email_controller2 || !email_controller3) 
+    {
+      Alert.alert("Message", "E-mail adress not valid. Please check if it is written correctly");
+    } 
+    else 
+    {
+      if (password.length === 0) { Alert.alert("Message", "Please enter your password"); } 
+      else 
+      {
         const loginData = { email: loginEmail, password: password };
         dispatch(loginUser(loginData));
+        //setEmailInput("");
+        //setPassword("");
       }
     }
-  };
-
-  const handleLoginSubmit = async () => {
-    //navigation.replace("HomeScreen");
   };
 
   const handlePasswordReset = async () => {

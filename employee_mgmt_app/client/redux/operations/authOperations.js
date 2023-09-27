@@ -12,26 +12,31 @@ import { Alert } from "react-native";
 export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData, { rejectWithValue }) => {
-    try {
+    try 
+    {
       const data = await registerUserApi(userData);
 
-      Alert.alert(
-        "Registration successful",
-        "Your account has been created! You may proceed to login now.",
-      );
+      if (userData.role == "admin")
+      {
+        Alert.alert("Registration successful", "Your account has been created! You may proceed to login now.");
+      }
 
+      else if (userData.role == "subadmin")
+      {
+        Alert.alert("Registration successful", "Employee may proceed to login now.");
+      }
+      
       return data;
-    } catch (error) {
+    }
+
+    catch (error) 
+    {
       const { status } = error.response.request;
 
-      if (status === 409) {
-        Alert.alert("Message", "This e-mail address is already registered.");
-      } else {
-        Alert.alert(
-          "Message",
-          "A problem has occurred, please try again later",
-        );
-      }
+      if (status === 409) { Alert.alert("Message", "This e-mail address is already registered."); } 
+      
+      else { Alert.alert("Message", "A problem has occurred, please try again later"); }
+      
       return rejectWithValue(error.message);
     }
   },
@@ -40,21 +45,22 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "auth/login",
   async (userData, { rejectWithValue }) => {
-    try {
+    try 
+    {
       const data = await loginUserApi(userData);
       return data;
-    } catch (error) {
+    } 
+    
+    catch (error) 
+    {
       const { status } = error.response.request;
-      if (status === 404) {
-        alert("User not found");
-      } else if (status === 400) {
-        alert("Wrong password");
-      } else {
-        Alert.alert(
-          "Message",
-          "A problem has occurred, please try again later",
-        );
-      }
+      
+      if (status === 404) { alert("User not found"); } 
+
+      else if (status === 400) { alert("Wrong password"); } 
+      
+      else { Alert.alert("Message", "A problem has occurred, please try again later"); }
+      
       return rejectWithValue(error.message);
     }
   },
