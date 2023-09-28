@@ -44,4 +44,4 @@ class Login(Resource):
             return {'message': 'Incorrect password'}, 400
         
         else: token = generate_token(user.id)
-        return {'token': token}, 200
+        return {'id': user.id, 'email': user.email, 'username': user.username, 'role': user.role, 'token': token}, 200

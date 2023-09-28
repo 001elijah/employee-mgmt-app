@@ -41,15 +41,13 @@ const RegistrationScreen = ({ navigation }) => {
   const handleRegistrationSubmit = (values) => {
     Keyboard.dismiss();
     const newUserData = {
-      username: values.fullName.trim().toLowerCase(),
+      username: values.fullName.trim(),
       email: values.email.trim().toLowerCase(),
       password: values.password.trim().toLowerCase(),
       role: "admin",
     };
     dispatch(registerUser(newUserData));
-    setFullName("");
-    setEmail("");
-    setPassword("");
+
     navigation.replace("LoginScreen");
   };
 

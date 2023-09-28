@@ -9,34 +9,47 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { Formik } from "formik";
+import * as yup from "yup";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import EyeIcon from "../assets/icons/EyeIcon";
 
+const registrationValidationSchema = yup.object().shape({
+  fullName: yup.string().required("Full name is required"),
+  email: yup
+    .string()
+    .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "Please enter valid email")
+    .required("Email Address is required"),
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*[a-zA-Z]{6})(?=.*\d)[a-zA-Z\d]{7}$/,
+      "Must Contain 6 Characters, One Number",
+    )
+    .min(7, ({ min }) => `Password must be minimum ${min} symbols`)
+    .required("Password is required"),
+});
+
 const AddEmployeeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(true);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleRegistrationSubmit = async () => {
+  const handleRegistrationSubmit = (values) => {
     Keyboard.dismiss();
     const newUserData = {
-      username: fullName,
-      email: email,
-      password: password,
+      username: values.fullName.trim(),
+      email: values.email.trim().toLowerCase(),
+      password: values.password.trim().toLowerCase(),
       role: "subadmin",
     };
-
     dispatch(registerUser(newUserData));
-    setFullName("");
-    setEmail("");
-    setPassword("");
+
+    navigation.replace("Home");
   };
 
   return (
@@ -53,46 +66,119 @@ const AddEmployeeScreen = ({ navigation }) => {
           <Text className="shrink mb-8 w-full text-xl text-slate-400">
             Create accounts for your employees here
           </Text>
-
-          <TextInput
-            className="h-14 w-full mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
-            value={fullName}
-            onChangeText={setFullName}
-            placeholder="Employee name"
-            blurOnSubmit={true}
-          />
-          <TextInput
-            className="h-14 w-full mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            placeholder="Employee e-mail"
-            blurOnSubmit={true}
-          />
-          <View className="w-full">
-            <TextInput
-              className="h-14 mb-20 pl-6 pr-11 border border-cyan-700/[.16] rounded-xl text-cyan-700"
-              value={password}
-              onChangeText={setPassword}
-              autoCapitalize="none"
-              placeholder="Password"
-              blurOnSubmit={true}
-              secureTextEntry={showPassword}
-            />
-            <TouchableOpacity
-              className="absolute items-center justify-center h-12 w-9 top-1 right-1"
-              activeOpacity={0.5}
-              onPress={toggleShowPassword}
-            >
-              <EyeIcon />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            className="flex-2 items-center justify-center w-full h-14 bg-sky-600 rounded-xl"
-            onPress={handleRegistrationSubmit}
+          <Formik
+            validationSchema={registrationValidationSchema}
+            initialValues={{ fullName: "", email: "", password: "" }}
+            onSubmit={(values) => handleRegistrationSubmit(values)}
           >
-            <Text className="text-white text-lg font-medium">Add account</Text>
-          </TouchableOpacity>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              touched,
+              errors,
+              isValid,
+            }) => (
+              <>
+                <View className="w-full">
+                  <TextInput
+                    className="h-14 mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
+                    value={values.fullName}
+                    onChangeText={handleChange("fullName")}
+                    onEndEditing={handleBlur("fullName")}
+                    placeholder="Full name"
+                    blurOnSubmit={true}
+                  />
+                  {errors.fullName && touched.fullName && (
+                    <Text
+                      style={{
+                        position: "absolute",
+                        bottom: 20,
+                        left: 25,
+                        fontSize: 10,
+                        color: "red",
+                      }}
+                    >
+                      {errors.fullName}
+                    </Text>
+                  )}
+                </View>
+                <View className="w-full">
+                  <TextInput
+                    className="h-14 mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
+                    value={values.email}
+                    onChangeText={handleChange("email")}
+                    onEndEditing={handleBlur("email")}
+                    autoCapitalize="none"
+                    placeholder="Email"
+                    blurOnSubmit={true}
+                  />
+                  {errors.email && touched.email && (
+                    <Text
+                      style={{
+                        position: "absolute",
+                        bottom: 21,
+                        left: 25,
+                        fontSize: 10,
+                        color: "red",
+                      }}
+                    >
+                      {errors.email}
+                    </Text>
+                  )}
+                </View>
+                <View className="w-full">
+                  <TextInput
+                    className="h-14 mb-20 pl-6 pr-11 border border-cyan-700/[.16] rounded-xl text-cyan-700"
+                    value={values.password}
+                    onChangeText={handleChange("password")}
+                    onEndEditing={handleBlur("password")}
+                    autoCapitalize="none"
+                    placeholder="Password"
+                    blurOnSubmit={true}
+                    secureTextEntry={showPassword}
+                  />
+                  <TouchableOpacity
+                    className="absolute items-center justify-center h-12 w-9 top-1 right-1"
+                    activeOpacity={0.5}
+                    onPress={toggleShowPassword}
+                  >
+                    <EyeIcon />
+                  </TouchableOpacity>
+                  {errors.password && touched.password && (
+                    <Text
+                      style={{
+                        position: "absolute",
+                        top: 37,
+                        left: 25,
+                        fontSize: 10,
+                        color: "red",
+                      }}
+                    >
+                      {errors.password}
+                    </Text>
+                  )}
+                </View>
+                <TouchableOpacity
+                  className={`flex-2 items-center justify-center w-full h-14 ${
+                    isValid &&
+                    values.fullName.trim().length !== 0 &&
+                    values.email.trim().length !== 0 &&
+                    values.password.trim().length !== 0
+                      ? "bg-sky-600"
+                      : "bg-sky-200"
+                  } rounded-xl`}
+                  onPress={handleSubmit}
+                  disabled={!isValid}
+                >
+                  <Text className="text-white text-lg font-medium">
+                    Create
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </Formik>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
