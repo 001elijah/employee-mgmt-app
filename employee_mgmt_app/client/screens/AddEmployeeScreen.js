@@ -25,10 +25,11 @@ const registrationValidationSchema = yup.object().shape({
   password: yup
     .string()
     .matches(
-      /^(?=.*[a-zA-Z]{6})(?=.*\d)[a-zA-Z\d]{7}$/,
-      "Must Contain 6 Characters, One Number",
+      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+      "Must contain at least 1 number",
     )
-    .min(7, ({ min }) => `Password must be minimum ${min} symbols`)
+    .min(6, ({ min }) => `Password must be minimum ${min} symbols`)
+    .max(16, ({ max }) => `Password must be maximum ${max} symbols`)
     .required("Password is required"),
 });
 
