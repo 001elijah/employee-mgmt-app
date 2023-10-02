@@ -4,41 +4,39 @@ import { registerUser } from "../redux/operations/authOperations";
 import {
   TouchableOpacity,
   Text,
-  TextInput,
   View,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 import { Formik } from "formik";
-import * as yup from "yup";
-
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
-import EyeIcon from "../assets/icons/EyeIcon";
-
-const registrationValidationSchema = yup.object().shape({
-  fullName: yup.string().required("Full name is required"),
-  email: yup
-    .string()
-    .matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, "Please enter valid email")
-    .required("Email Address is required"),
-  password: yup
-    .string()
-    .matches(
-      /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
-      "Must contain at least 1 number",
-    )
-    .min(6, ({ min }) => `Password must be minimum ${min} symbols`)
-    .max(16, ({ max }) => `Password must be maximum ${max} symbols`)
-    .required("Password is required"),
-});
+import { registrationValidationSchema } from "../utils/validationSchemas";
+import NameInput from "../components/NameInput";
+import EmailInput from "../components/EmailInput";
+import PasswordInput from "../components/PasswordInput";
+import { RADIO_BUTTON_GROUP_DATA } from "../utils/constants";
+import RadioButtonGroup from "../components/RadioButtonGroup";
 
 const AddEmployeeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const [showPassword, setShowPassword] = useState(true);
+  const [radioButtonGroupData, setRadioButtonGroupData] = useState(
+    RADIO_BUTTON_GROUP_DATA,
+  );
+  const [radioSelected, setRadioSelected] = useState(undefined);
 
-  const toggleShowPassword = () => setShowPassword(!showPassword);
+  const onRadioBtnClick = (item) => {
+    let updatedState = radioButtonGroupData.map((radioButtonItem) => {
+      if (radioButtonItem.id === item.id) {
+        setRadioSelected &&
+          setRadioSelected({ ...radioButtonItem, selected: true });
+        return { ...radioButtonItem, selected: true };
+      } else {
+        return { ...radioButtonItem, selected: false };
+      }
+    });
+    setRadioButtonGroupData(updatedState);
+  };
 
   const handleRegistrationSubmit = (values) => {
     Keyboard.dismiss();
@@ -46,12 +44,14 @@ const AddEmployeeScreen = ({ navigation }) => {
       username: values.fullName.trim(),
       email: values.email.trim().toLowerCase(),
       password: values.password.trim().toLowerCase(),
-      role: "subadmin",
+      role: radioSelected?.value,
     };
+
     dispatch(registerUser(newUserData));
 
     navigation.replace("Home");
   };
+
 
   return (
     <KeyboardAwareScrollView
@@ -82,88 +82,36 @@ const AddEmployeeScreen = ({ navigation }) => {
               isValid,
             }) => (
               <>
-                <View className="w-full">
-                  <TextInput
-                    className="h-14 mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
-                    value={values.fullName}
-                    onChangeText={handleChange("fullName")}
-                    onEndEditing={handleBlur("fullName")}
-                    placeholder="Full name"
-                    blurOnSubmit={true}
-                  />
-                  {errors.fullName && touched.fullName && (
-                    <Text
-                      style={{
-                        position: "absolute",
-                        bottom: 20,
-                        left: 25,
-                        fontSize: 10,
-                        color: "red",
-                      }}
-                    >
-                      {errors.fullName}
-                    </Text>
-                  )}
-                </View>
-                <View className="w-full">
-                  <TextInput
-                    className="h-14 mb-4 px-6 border border-cyan-700/[.16] rounded-xl text-cyan-700"
-                    value={values.email}
-                    onChangeText={handleChange("email")}
-                    onEndEditing={handleBlur("email")}
-                    autoCapitalize="none"
-                    placeholder="Email"
-                    blurOnSubmit={true}
-                  />
-                  {errors.email && touched.email && (
-                    <Text
-                      style={{
-                        position: "absolute",
-                        bottom: 21,
-                        left: 25,
-                        fontSize: 10,
-                        color: "red",
-                      }}
-                    >
-                      {errors.email}
-                    </Text>
-                  )}
-                </View>
-                <View className="w-full">
-                  <TextInput
-                    className="h-14 mb-20 pl-6 pr-11 border border-cyan-700/[.16] rounded-xl text-cyan-700"
-                    value={values.password}
-                    onChangeText={handleChange("password")}
-                    onEndEditing={handleBlur("password")}
-                    autoCapitalize="none"
-                    placeholder="Password"
-                    blurOnSubmit={true}
-                    secureTextEntry={showPassword}
-                  />
-                  <TouchableOpacity
-                    className="absolute items-center justify-center h-12 w-9 top-1 right-1"
-                    activeOpacity={0.5}
-                    onPress={toggleShowPassword}
-                  >
-                    <EyeIcon />
-                  </TouchableOpacity>
-                  {errors.password && touched.password && (
-                    <Text
-                      style={{
-                        position: "absolute",
-                        top: 37,
-                        left: 25,
-                        fontSize: 10,
-                        color: "red",
-                      }}
-                    >
-                      {errors.password}
-                    </Text>
-                  )}
-                </View>
+                <NameInput
+                  values={values}
+                  onChangeText={handleChange("fullName")}
+                  onEndEditing={handleBlur("fullName")}
+                  errors={errors}
+                  touched={touched}
+                />
+                <EmailInput
+                  values={values}
+                  onChangeText={handleChange("email")}
+                  onEndEditing={handleBlur("email")}
+                  errors={errors}
+                  touched={touched}
+                />
+                <PasswordInput
+                  values={values}
+                  onChangeText={handleChange("password")}
+                  onEndEditing={handleBlur("password")}
+                  errors={errors}
+                  touched={touched}
+                />
+                <RadioButtonGroup
+                  styling={"mb-8"}
+                  data={radioButtonGroupData}
+                  onPress={onRadioBtnClick}
+                />
                 <TouchableOpacity
                   className={`flex-2 items-center justify-center w-full h-14 ${
                     isValid &&
+                    radioSelected &&
                     values.fullName.trim().length !== 0 &&
                     values.email.trim().length !== 0 &&
                     values.password.trim().length !== 0
@@ -171,11 +119,9 @@ const AddEmployeeScreen = ({ navigation }) => {
                       : "bg-sky-200"
                   } rounded-xl`}
                   onPress={handleSubmit}
-                  disabled={!isValid}
+                  disabled={!isValid || !radioSelected}
                 >
-                  <Text className="text-white text-lg font-medium">
-                    Create
-                  </Text>
+                  <Text className="text-white text-lg font-medium">Create</Text>
                 </TouchableOpacity>
               </>
             )}
