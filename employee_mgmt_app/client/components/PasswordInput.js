@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import EyeIcon from "../assets/icons/EyeIcon";
+import EyeOffIcon from "../assets/icons/EyeOffIcon";
+import EyeOnIcon from "../assets/icons/EyeOnIcon";
 
 const PasswordInput = ({
   values,
@@ -9,8 +10,8 @@ const PasswordInput = ({
   errors,
   touched,
 }) => {
-    const [showPassword, setShowPassword] = useState(true);
-    const toggleShowPassword = () => setShowPassword(!showPassword);
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => setShowPassword(!showPassword);
   return (
     <View className="w-full">
       <TextInput
@@ -21,14 +22,14 @@ const PasswordInput = ({
         autoCapitalize="none"
         placeholder="Password"
         blurOnSubmit={true}
-        secureTextEntry={showPassword}
+        secureTextEntry={!showPassword}
       />
       <TouchableOpacity
         className="absolute items-center justify-center h-12 w-9 top-1 right-1"
         activeOpacity={0.5}
         onPress={toggleShowPassword}
       >
-        <EyeIcon />
+        {showPassword ? <EyeOffIcon /> : <EyeOnIcon />}
       </TouchableOpacity>
       {errors.password && touched.password && (
         <Text

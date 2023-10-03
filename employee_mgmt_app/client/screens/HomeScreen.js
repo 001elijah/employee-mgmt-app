@@ -2,7 +2,12 @@ import * as React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../redux/operations/authOperations";
-import { selectEmail, selectToken, selectUserName, selectUserRole } from "../redux/selectors/authSelectors";
+import {
+  selectEmail,
+  selectToken,
+  selectUserName,
+  selectUserRole,
+} from "../redux/selectors/authSelectors";
 import SignoutIcon from "../assets/icons/SignoutIcon";
 
 const HomeScreen = () => {

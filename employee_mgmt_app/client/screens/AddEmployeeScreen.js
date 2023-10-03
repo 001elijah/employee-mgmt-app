@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../redux/operations/authOperations";
 import {
   TouchableOpacity,
@@ -16,9 +16,11 @@ import EmailInput from "../components/EmailInput";
 import PasswordInput from "../components/PasswordInput";
 import { RADIO_BUTTON_GROUP_DATA } from "../utils/constants";
 import RadioButtonGroup from "../components/RadioButtonGroup";
+import { selectUserRole } from "../redux/selectors/authSelectors";
 
 const AddEmployeeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const role = useSelector(selectUserRole);
 
   const [radioButtonGroupData, setRadioButtonGroupData] = useState(
     RADIO_BUTTON_GROUP_DATA,
@@ -44,14 +46,13 @@ const AddEmployeeScreen = ({ navigation }) => {
       username: values.fullName.trim(),
       email: values.email.trim().toLowerCase(),
       password: values.password.trim().toLowerCase(),
-      role: radioSelected?.value,
+      role: role === "admin" ? radioSelected?.value : "staff",
     };
 
     dispatch(registerUser(newUserData));
 
     navigation.replace("Home");
   };
-
 
   return (
     <KeyboardAwareScrollView
@@ -65,7 +66,9 @@ const AddEmployeeScreen = ({ navigation }) => {
             Add employee
           </Text>
           <Text className="shrink mb-8 w-full text-xl text-slate-400">
-            Create accounts for your employees here
+            {role === "admin"
+              ? "Create accounts for your employees here"
+              : "Create accounts for your employees (staff role only) here"}
           </Text>
           <Formik
             validationSchema={registrationValidationSchema}
@@ -103,23 +106,28 @@ const AddEmployeeScreen = ({ navigation }) => {
                   errors={errors}
                   touched={touched}
                 />
-                <RadioButtonGroup
-                  styling={"mb-8"}
-                  data={radioButtonGroupData}
-                  onPress={onRadioBtnClick}
-                />
+                {role === "admin" && (
+                  <RadioButtonGroup
+                    styling={"mb-8"}
+                    data={radioButtonGroupData}
+                    onPress={onRadioBtnClick}
+                  />
+                )}
                 <TouchableOpacity
-                  className={`flex-2 items-center justify-center w-full h-14 ${
-                    isValid &&
-                    radioSelected &&
-                    values.fullName.trim().length !== 0 &&
-                    values.email.trim().length !== 0 &&
-                    values.password.trim().length !== 0
+                  className={`${
+                    role === "subadmin" && "mt-8"
+                  } flex-2 items-center justify-center w-full h-14 ${
+                    role === "admin"
+                      ? isValid && radioSelected
+                      : isValid &&
+                        values.fullName.trim().length !== 0 &&
+                        values.email.trim().length !== 0 &&
+                        values.password.trim().length !== 0
                       ? "bg-sky-600"
                       : "bg-sky-200"
                   } rounded-xl`}
                   onPress={handleSubmit}
-                  disabled={!isValid || !radioSelected}
+                  disabled={!isValid || (role === "admin" && !radioSelected)}
                 >
                   <Text className="text-white text-lg font-medium">Create</Text>
                 </TouchableOpacity>

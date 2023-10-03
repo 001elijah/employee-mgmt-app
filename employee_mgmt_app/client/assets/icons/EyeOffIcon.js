@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
-const EyeIcon = (props) => (
+const EyeOffIcon = (props) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={20}
@@ -24,4 +24,4 @@ const EyeIcon = (props) => (
     </Defs>
   </Svg>
 );
-export default EyeIcon;
+export default EyeOffIcon;

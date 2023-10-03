@@ -14,7 +14,7 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const data = await registerUserApi(userData);
-
+      
       if (userData.role == "admin") {
         Alert.alert(
           "Registration successful",
