@@ -22,7 +22,10 @@ const PasswordInput = ({
         autoCapitalize="none"
         placeholder="Password"
         blurOnSubmit={true}
+        fontSize={16}
+        maxLength={17}
         secureTextEntry={!showPassword}
+
       />
       <TouchableOpacity
         className="absolute items-center justify-center h-12 w-9 top-1 right-1"

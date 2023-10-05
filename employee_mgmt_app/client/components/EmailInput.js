@@ -15,9 +15,13 @@ const EmailInput = ({
         value={values.email}
         onChangeText={onChangeText}
         onEndEditing={onEndEditing}
-        autoCapitalize="none"
-        placeholder="Email"
         blurOnSubmit={true}
+        maxLength={320}
+        autoCapitalize="none"
+        placeholder="E-mail"
+        inputMode="email"
+        //selectTextOnFocus={true}
+        fontSize={16}
       />
       {errors.email && touched.email && (
         <Text

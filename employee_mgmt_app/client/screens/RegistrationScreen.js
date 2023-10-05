@@ -20,15 +20,16 @@ const RegistrationScreen = ({ navigation }) => {
 
   const handleRegistrationSubmit = (values) => {
     Keyboard.dismiss();
+
     const newUserData = {
-      username: values.fullName.trim(),
+      username: values.fullName.replace(/\s+/g, " ").trim(),
       email: values.email.trim().toLowerCase(),
-      password: values.password.trim().toLowerCase(),
+      password: values.password,
       role: "admin",
     };
     dispatch(registerUser(newUserData));
 
-    navigation.replace("LoginScreen");
+    navigation.replace("RegistrationScreen");
   };
 
   return (

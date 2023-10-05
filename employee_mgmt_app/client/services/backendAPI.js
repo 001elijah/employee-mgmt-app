@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://cdbe-91-90-11-228.ngrok-free.app";
+axios.defaults.baseURL = "https://01c3-217-210-72-219.ngrok-free.app";
 
 const token = {
   set(token) {

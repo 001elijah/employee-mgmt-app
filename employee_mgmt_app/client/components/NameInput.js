@@ -11,6 +11,9 @@ const NameInput = ({ values, onChangeText, onEndEditing, errors, touched }) => {
         onEndEditing={onEndEditing}
         placeholder="Full name"
         blurOnSubmit={true}
+        autoCapitalize="words"
+        maxLength={350}
+        fontSize={16}
       />
       {errors.fullName && touched.fullName && (
         <Text

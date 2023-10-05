@@ -43,9 +43,9 @@ const AddEmployeeScreen = ({ navigation }) => {
   const handleRegistrationSubmit = (values) => {
     Keyboard.dismiss();
     const newUserData = {
-      username: values.fullName.trim(),
+      username: values.fullName.replace(/\s+/g, " ").trim(),
       email: values.email.trim().toLowerCase(),
-      password: values.password.trim().toLowerCase(),
+      password: values.password,
       role: role === "admin" ? radioSelected?.value : "staff",
     };
 
