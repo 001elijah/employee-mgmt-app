@@ -1,5 +1,5 @@
 from flask_restx import fields
-from .extensions import  api
+from app.extensions import  api
 
 user_signup_model=api.model('UserSignup',{
     'id':fields.Integer(readonly=True),

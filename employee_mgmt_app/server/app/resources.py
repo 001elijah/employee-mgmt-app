@@ -1,9 +1,10 @@
 from flask_restx import Resource, Namespace
-from .services import generate_token, hash_password, check_password
-from .models import User
-from .extensions import db, api
-from .requestParsing import signup_parser, login_parser
-from .api_models import user_signup_model, user_login_model
+from app.services import generate_token, hash_password, check_password
+from app.models import User
+from app.extensions import api
+from app.extensions import db
+from app.requestParsing import signup_parser, login_parser
+from app.api_models import user_signup_model, user_login_model
 
 ns = Namespace('auth', description='Authentication related operations')
 
