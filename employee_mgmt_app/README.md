@@ -1,5 +1,11 @@
 # Welcome to employee_mgmt_app
 
+🤖 Open this link on your Android device (or scan the QR code) to install the app:
+
+https://expo.dev/accounts/fixersluday/projects/client/builds/edc19679-03ce-4135-8d1b-a6dc9463dee6
+
+![QR code](./APKQRcode.png?raw=true "QR code")
+
 ## How to run the server (**MacOS**)
 
 to run the server locally, download or clone the repo, go to `cd employee_mgmt_app/server/app`;
