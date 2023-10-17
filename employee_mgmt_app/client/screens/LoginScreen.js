@@ -6,10 +6,14 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  TouchableOpacity, Text,
-  TextInput, View,
+  TouchableOpacity,
+  Text,
+  TextInput,
+  View,
   TouchableWithoutFeedback,
-  Keyboard, Alert, StatusBar,
+  Keyboard,
+  Alert,
+  StatusBar,
 } from "react-native";
 
 import EmailInput from "../components/EmailInput";
@@ -22,10 +26,8 @@ const loginValidation = yup.object().shape({
     .string()
     .matches(validEmailCheck, "E-mail address not valid")
     .required("E-mail address is required"),
-    
-    password: yup
-    .string()
-    .required("Password is required"),
+
+  password: yup.string().required("Password is required"),
 });
 
 const LoginScreen = ({ navigation }) => {
@@ -36,11 +38,13 @@ const LoginScreen = ({ navigation }) => {
   const handleLoginAttempt = (values) => {
     Keyboard.dismiss();
 
-    const loginData = { email: values.email.toLowerCase().trim(), password: values.password };
-    
+    const loginData = {
+      email: values.email.toLowerCase().trim(),
+      password: values.password,
+    };
+
     dispatch(loginUser(loginData));
   };
-
 
   const handlePasswordReset = async () => {
     Keyboard.dismiss();
@@ -55,9 +59,13 @@ const LoginScreen = ({ navigation }) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="px-5 flex-1 justify-start items-start bottom-1">
-          <Text className="right-px shrink mt-40 mb-16 w-48 text-3xl font-bold text-4xl">Login </Text>
+          <Text className="right-px shrink mt-40 mb-16 w-48 text-3xl font-bold text-4xl">
+            Login{" "}
+          </Text>
 
-          <Text className="shrink mb-8 mt-4 w-full text-2xl text-slate-400">Sign in to your account </Text>
+          <Text className="shrink mb-8 mt-4 w-full text-2xl text-slate-400">
+            Sign in to your account{" "}
+          </Text>
 
           <Formik
             validationSchema={loginValidation}
@@ -98,7 +106,7 @@ const LoginScreen = ({ navigation }) => {
                   } rounded-xl`}
                   onPress={handleSubmit}
                   disabled={!isValid}
-                  >
+                >
                   <Text className="text-white text-lg font-medium">Login</Text>
                 </TouchableOpacity>
               </>
@@ -109,14 +117,18 @@ const LoginScreen = ({ navigation }) => {
             className="mx-auto bg-transparent bottom-4"
             onPress={handlePasswordReset}
           >
-            <Text className="text-sky-600 text-lg text-base mt-8">Forgot Password?</Text>
+            <Text className="text-sky-600 text-lg text-base mt-8">
+              Forgot Password?
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             className="mx-auto bg-transparent mt-5 mt-14"
             onPress={() => navigation.navigate("RegistrationScreen")}
           >
-            <Text className="text-sky-600 text-lg text-base mt-4">Don't have an account? Join us</Text>
+            <Text className="text-sky-600 text-lg text-base mt-4">
+              Don't have an account? Join us
+            </Text>
           </TouchableOpacity>
         </View>
       </TouchableWithoutFeedback>

@@ -129,7 +129,7 @@ const AddEmployeeScreen = ({ navigation }) => {
                   onPress={handleSubmit}
                   disabled={!isValid || (role === "admin" && !radioSelected)}
                 >
-                  <Text className="text-white text-lg font-medium">Create</Text>
+                  <Text className="text-lg font-medium">Create</Text>
                 </TouchableOpacity>
               </>
             )}

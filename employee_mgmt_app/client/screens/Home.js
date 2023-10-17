@@ -7,11 +7,88 @@ import AddEmployeeScreen from "./AddEmployeeScreen";
 import HomeIcon from "../assets/icons/HomeIcon";
 import BookIcon from "../assets/icons/BookIcon";
 import MessageIcon from "../assets/icons/MessageIcon";
+import DashboardScreen from "./DashboardScreen";
 import { Platform, View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { selectIsAuth, selectUserRole } from "../redux/selectors/authSelectors";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import UserManagementScreen from "./UserManagementScreen";
+import TimeTrackerScreen from "./TimeTrackerScreen";
+import CalendarScreen from "./CalendarScreen";
+import ReportScreen from "./ReportScreen";
+import UploadDocsScreen from "./UploadDocsScreen";
+import PaymentSystemScreen from "./PaymentSystemScreen";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+export const EmployeeManagementStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        animation: "none",
+        headerShown: false,
+        gestureEnabled: false,
+      }}
+    >
+      <Stack.Screen
+        // options={{ headerShown: false }}
+        name="UserManagementScreen"
+        component={UserManagementScreen}
+      ></Stack.Screen>
+      <Stack.Screen
+        // options={{ headerShown: false }}
+        name="AddEmployeeScreen"
+        component={AddEmployeeScreen}
+      ></Stack.Screen>
+    </Stack.Navigator>
+  );
+};
+
+export const DashboardStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        animation: "none",
+        headerShown: false,
+        gestureEnabled: false,
+      }}
+    >
+      <Stack.Screen
+        // options={{ headerShown: false }}
+        name="DashboardScreen"
+        component={DashboardScreen}
+      ></Stack.Screen>
+      <Stack.Screen name="HomeScreen" component={HomeScreen}></Stack.Screen>
+      <Stack.Screen
+        animationEnabled={false}
+        name="EmployeeManagementStack"
+        component={EmployeeManagementStack}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="TimeTrackerScreen"
+        component={TimeTrackerScreen}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="HistoryScreen"
+        component={HistoryScreen}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="CalendarScreen"
+        component={CalendarScreen}
+      ></Stack.Screen>
+      <Stack.Screen name="ReportScreen" component={ReportScreen}></Stack.Screen>
+      <Stack.Screen
+        name="UploadDocsScreen"
+        component={UploadDocsScreen}
+      ></Stack.Screen>
+      <Stack.Screen
+        name="PaymentSystemScreen"
+        component={PaymentSystemScreen}
+      ></Stack.Screen>
+    </Stack.Navigator>
+  );
+};
 
 const Home = ({ navigation }) => {
   const isAuthorized = useSelector(selectIsAuth);
@@ -22,7 +99,7 @@ const Home = ({ navigation }) => {
   }, [isAuthorized]);
   return (
     <Tab.Navigator
-      initialRouteName={"HomeScreen"}
+      initialRouteName={"Dashboard"}
       screenOptions={{
         tabBarHideOnKeyboard: Platform.OS !== "ios",
         tabBarActiveTintColor: "#fff",
@@ -41,8 +118,8 @@ const Home = ({ navigation }) => {
       }}
     >
       <Tab.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="DashboardStack"
+        component={DashboardStack}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
@@ -58,7 +135,7 @@ const Home = ({ navigation }) => {
           tabBarShowLabel: false,
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="HistoryScreen"
         component={HistoryScreen}
         options={{
@@ -74,7 +151,7 @@ const Home = ({ navigation }) => {
           title: "History",
           tabBarShowLabel: false,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="MessagesScreen"
         component={MessagesScreen}
@@ -92,7 +169,7 @@ const Home = ({ navigation }) => {
           tabBarShowLabel: false,
         }}
       />
-      {role !== "staff" && (
+      {/* {role !== "staff" && (
         <Tab.Screen
           name="AddEmployeeScreen"
           component={AddEmployeeScreen}
@@ -116,7 +193,7 @@ const Home = ({ navigation }) => {
             tabBarShowLabel: false,
           }}
         />
-      )}
+      )} */}
     </Tab.Navigator>
   );
 };

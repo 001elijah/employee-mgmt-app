@@ -17,17 +17,19 @@ export const registerUser = createAsyncThunk(
 
       const userRole = userData.role;
 
-      const alertMessage1 = 'Your account has been created! You may proceed to login now.';
+      const alertMessage1 =
+        "Your account has been created! You may proceed to login now.";
 
-      const alertMessage2 = 'An e-mail with a password for the new account has been sent to the employee.';
-      
-      if (userRole === "admin") { Alert.alert("Registration successful", alertMessage1); }
+      const alertMessage2 =
+        "An e-mail with a password for the new account has been sent to the employee.";
 
-      else if (userRole === "subadmin" || userRole === "staff") { Alert.alert("Account has been created!", alertMessage2); }
+      if (userRole === "admin") {
+        Alert.alert("Registration successful", alertMessage1);
+      } else if (userRole === "subadmin" || userRole === "staff") {
+        Alert.alert("Account has been created!", alertMessage2);
+      }
 
       return data;
-
-
     } catch (error) {
       const { status } = error.response.request;
 

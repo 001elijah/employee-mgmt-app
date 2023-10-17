@@ -2,7 +2,7 @@
   "cli": {
     "version": ">= 5.4.0"
   },
- "build": {
+  "build": {
     "preview": {
       "distribution": "internal",
       "android": {

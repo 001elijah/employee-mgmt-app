@@ -40,7 +40,7 @@ const RegistrationScreen = ({ navigation }) => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="px-5 flex-1 justify-start items-start bottom-4">
-          <Text className="shrink mt-48 mb-14 w-48 text-4xl font-medium">
+          <Text className="shrink mt-48 mb-14 w-50 text-4xl font-medium">
             Employer Registration
           </Text>
           <Text className="shrink mb-8 w-full text-xl text-slate-400">

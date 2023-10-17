@@ -1,68 +1,42 @@
 import * as React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../redux/operations/authOperations";
+import { Text, View } from "react-native";
+import { useSelector } from "react-redux";
 import {
   selectEmail,
-  selectToken,
   selectUserName,
   selectUserRole,
 } from "../redux/selectors/authSelectors";
-import SignoutIcon from "../assets/icons/SignoutIcon";
+import InformationField from "../components/InformationField";
+import GoBack from "../components/GoBack";
+import { capitalize } from "../utils/capitalize";
 
 const HomeScreen = () => {
-  const dispatch = useDispatch();
-  const token = useSelector(selectToken);
   const name = useSelector(selectUserName);
   const email = useSelector(selectEmail);
   const role = useSelector(selectUserRole);
 
-  const handleLogout = () => {
-    if (token) dispatch(logoutUser());
-  };
-
   return (
     <>
-      <View className="w-full h-[357px] items-center rounded-b-[30px] bg-[#2578CC]">
-        <TouchableOpacity
-          className="mt-[61px] ml-[20px] mr-auto flex-row"
-          activeOpacity={0.5}
-          onPress={handleLogout}
-        >
-          <SignoutIcon />
-          <Text className="ml-1 text-white text-xs font-medium">sign out</Text>
-        </TouchableOpacity>
-        <View className="w-1/2 h-10 items-center justify-center rounded-full bg-white h-36 w-36">
-          <Text className="font-semibold text-7xl color-gray-400 top-1">
-            {name?.charAt(0)}
+      <View className="w-full items-center ">
+        <View className="absolute top-[55px] left-[20px]">
+          <GoBack />
+        </View>
+
+        <Text className="mt-[60px] text-2xl font-semibold text-black text-center w-full">
+          Personal information
+        </Text>
+
+        <View className="mt-[50px] w-36 h-36 bg-white rounded-full items-center justify-center shadow-md shadow-black">
+          <Text className="font-semibold text-6xl text-gray-400">
+            {name ? capitalize(name.charAt(0)) : ""}
           </Text>
         </View>
-        <Text className="mt-[28px] text-3xl font-semibold text-[#FFF]">
-          {name}
-        </Text>
       </View>
 
       <View className="mt-4 px-4">
-        <View className="items-center justify-center">
-          <Text className="font-semibold text-xl">Personal information</Text>
-        </View>
-
-        <View className="mt-[30px]">
-          <View className="mb-3.5">
-            <Text className="font-semibold text-xl text-[#2578CC]">
-              Full Name
-            </Text>
-            <Text className="text-xl font-light text-[#677294]">{name}</Text>
-          </View>
-          <View className="mb-3.5">
-            <Text className="font-semibold text-xl text-[#2578CC]">Email</Text>
-            <Text className="text-xl font-light text-[#677294]">{email}</Text>
-          </View>
-          <View>
-            <Text className="font-semibold text-xl text-[#2578CC]">Role</Text>
-            <Text className="text-xl font-light text-[#677294]">{role}</Text>
-          </View>
-        </View>
+        <InformationField title="Full Name" value={capitalize(name)} />
+        <InformationField title="Email" value={email} />
+        <InformationField title="Role" value={role} />
       </View>
     </>
   );
