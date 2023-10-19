@@ -10,7 +10,7 @@ const dashboardItems = [
   {
     id: 2,
     icon: "users",
-    label: "User Management",
+    label: "Manage users",
     screen: "EmployeeManagementStack",
   },
   {

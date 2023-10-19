@@ -26,8 +26,8 @@ const HomeScreen = () => {
           Personal information
         </Text>
 
-        <View className="mt-[50px] w-36 h-36 bg-white rounded-full items-center justify-center shadow-md shadow-black">
-          <Text className="font-semibold text-6xl text-gray-400">
+        <View className="mt-[50px] w-36 h-36 bg-[#4D91D5] rounded-full items-center justify-center shadow-md shadow-black">
+          <Text className="font-semibold text-6xl text-white">
             {name ? capitalize(name.charAt(0)) : ""}
           </Text>
         </View>
