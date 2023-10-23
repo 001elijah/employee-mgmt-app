@@ -50,8 +50,9 @@ export default function Home() {
 				<LinkCard
 					title='Vote'
 					description='Cast your vote for your favorite candidate in the elections'
-					href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
+					href='/testing'
 					imageSrc='/assets/images/vote.png'
+					className='cursor-pointer'
 				/>
 				<LinkCard
 					title='Confirm'

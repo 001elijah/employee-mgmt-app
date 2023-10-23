@@ -1,18 +1,7 @@
 {
- "name": "contract",
-  "version": "1.0.0",
-  "description": "Smart contract",
-  "main": "truffle-config.js",
-  "directories": {
-    "test": "test"
-    
-  }, "scripts": {
-    "test": "mocha"
-  },
-
-  "dependencies": {
-    "mocha": "^10.2.0",
-    "truffle": "^5.11.5",
-    "truffle-contract": "^4.0.31"
+  "name": "hardhat-project",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.18.2"
   }
 }

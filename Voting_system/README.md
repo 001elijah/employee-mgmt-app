@@ -13,7 +13,7 @@ An electronic voting platform built with Next.js and Solidity to provide secure,
 ## Tech Stack
 
 - **Frontend**: Next.js, React.js, Tailwind CSS
-- **Backend**: Solidity, Truffle, Ganache
+- **Backend**: Solidity, Hardhat, Remix
 - **Blockchain**: Ethereum\*
 
 ## Installation
@@ -39,7 +39,7 @@ npm run dev
 ## Usage
 
 1. Create a new account in MetaMask and connect to the local blockchain.
-2. Import the private key of the first account in Ganache to MetaMask.
+2. Import the private key of the first account in Hardhat terminal to MetaMask.
 3. Navigate to http://localhost:3000 and start voting.
 
 ## Screenshots

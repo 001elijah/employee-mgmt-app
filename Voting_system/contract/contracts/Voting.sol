@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity 0.8.17;
 
 contract VotingSystem {
     address public admin;
@@ -8,6 +8,8 @@ contract VotingSystem {
     struct Election {
         string info;
         string[] candidates;
+        uint startDate;
+        uint endDate;
         mapping(address => uint) votes;
         mapping(uint => uint) results;
     }
@@ -30,6 +32,22 @@ contract VotingSystem {
         _;
     }
 
+    modifier afterStartDate(uint _electionId) {
+        require(
+            block.timestamp >= elections[_electionId].startDate,
+            "Voting has not started yet."
+        );
+        _;
+    }
+
+    modifier beforeEndDate(uint _electionId) {
+        require(
+            block.timestamp < elections[_electionId].endDate,
+            "Voting has ended."
+        );
+        _;
+    }
+
     Election[] public elections;
 
     constructor() {
@@ -45,6 +63,8 @@ contract VotingSystem {
 
     function createElection(
         string memory _info,
+        uint _startDate,
+        uint _endDate,
         string[] memory _candidates
     ) public onlyAdmin {
         require(
@@ -52,10 +72,19 @@ contract VotingSystem {
             "At least two candidates are required."
         );
 
+        require(_endDate > _startDate, "End date must be after start date.");
+
+        require(
+            _startDate > block.timestamp,
+            "Start date must be in the future."
+        );
+
         Election storage newElection = elections.push();
 
         newElection.info = _info;
         newElection.candidates = _candidates;
+        newElection.startDate = _startDate;
+        newElection.endDate = _endDate;
 
         emit ElectionCreated(elections.length - 1, _info);
     }
@@ -63,7 +92,13 @@ contract VotingSystem {
     function vote(
         uint _electionId,
         uint _candidateIndex
-    ) public electionExists(_electionId) hasNotVoted(_electionId) {
+    )
+        public
+        electionExists(_electionId)
+        afterStartDate(_electionId)
+        beforeEndDate(_electionId)
+        hasNotVoted(_electionId)
+    {
         require(
             _candidateIndex < elections[_electionId].candidates.length,
             "Invalid candidate index."
@@ -100,5 +135,11 @@ contract VotingSystem {
 
     function getTestString() public view returns (string memory) {
         return testString;
+    }
+
+    function getElectionInfo(
+        uint _electionId
+    ) public view electionExists(_electionId) returns (string memory) {
+        return elections[_electionId].info;
     }
 }

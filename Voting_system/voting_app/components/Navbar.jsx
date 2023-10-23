@@ -17,18 +17,22 @@ const Nav = () => {
 					/>
 				</Link>
 			</div>
-
-			<h1 className='text-6xl text-sky-600 font-bold'>How it works</h1>
-
-			<div className='flex items-center space-x-4'>
-				<Link href='/testing'>
-					<p className='text-gray-600 hover:text-gray-900'>testing</p>
-				</Link>
-			</div>
-			<div className='flex items-center space-x-4'>
-				<Link href='/admin'>
-					<p className='text-gray-600 hover:text-gray-900'>admin</p>
-				</Link>
+			<div className='flex items-center space-x-4 text-2xl font-semibold '>
+				<div className=''>
+					<Link href='/testing'>
+						<p className='text-gray-600 hover:text-gray-900'>Testing</p>
+					</Link>
+				</div>
+				<div className='flex items-center space-x-4'>
+					<Link href='/admin'>
+						<p className='text-gray-600 hover:text-gray-900'>Admin</p>
+					</Link>
+				</div>
+				<div className='flex items-center space-x-4'>
+					<Link href='/elections'>
+						<p className='text-gray-600 hover:text-gray-900'>Elections</p>
+					</Link>
+				</div>
 			</div>
 		</nav>
 	);

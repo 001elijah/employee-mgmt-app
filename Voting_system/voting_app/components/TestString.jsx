@@ -17,6 +17,7 @@ function TestString() {
 			await contract.methods
 				.setTestString(testString)
 				.send({ from: accounts[0] });
+			console.log("wow", testString);
 			alert("Test string set successfully!");
 		} catch (error) {
 			console.error("Failed to set test string:", error);
@@ -24,14 +25,14 @@ function TestString() {
 		}
 	};
 
-	const handleGetTestString = async () => {
+	const getTestString = async () => {
 		const contract = getContract();
+		console.log(contract);
 
 		try {
-			const data = await contract.methods.getTestString().call();
-			setCurrentTestString(data);
-			console.log(data);
-			alert("Retrieved test string: " + data);
+			const string = await contract.methods.getTestString(testString).call();
+			console.log("wow", testString);
+			setCurrentTestString(string);
 		} catch (error) {
 			console.error("Failed to get test string:", error);
 			alert("Failed to get test string. Check the console for details.");
@@ -48,7 +49,7 @@ function TestString() {
 			<button onClick={handleSetTestString}>Set Test String</button>
 
 			<h2>Current Test String: {currentTestString}</h2>
-			<button onClick={handleGetTestString}>Get Test String</button>
+			<button onClick={getTestString}>Get Test String</button>
 			<h2>{currentTestString}</h2>
 		</div>
 	);
