@@ -1,0 +1,25 @@
+how to add data to db with flask migrate
+
+roles = sa.table("roles", sa.column("id", sa.Integer), sa.column("role", sa.String))
+
+    status = sa.table(
+        "status", sa.column("id", sa.Integer), sa.column("status", sa.String)
+    )
+
+    op.bulk_insert(
+        roles,
+        [
+            {"role": "admin"},
+            {"role": "subadmin"},
+            {"role": "staff"},
+        ],
+    )
+
+    op.bulk_insert(
+        status,
+        [
+            {"status": "pending"},
+            {"status": "complete"},
+            {"status": "incomplete"},
+        ],
+    )

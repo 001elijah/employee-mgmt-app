@@ -1,7 +1,7 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://employeeapp.luday.xyz";
-//axios.defaults.baseURL = "https://56d4-90-227-148-151.ngrok-free.app";
+// axios.defaults.baseURL = "https://employeeapp.luday.xyz";
+axios.defaults.baseURL = "https://1be8-90-227-148-151.ngrok-free.app";
 
 const token = {
   set(token) {
@@ -36,4 +36,14 @@ export const currentUserApi = async (userToken) => {
 export const updateUserApi = async (userData) => {
   const { data } = await axios.patch("/auth/updateUserInfo", userData);
   return data.user;
+};
+
+export const fetchTimesApi = async (employeeId) => {
+  const { data } = await axios.get(`/gettimes/${employeeId}`);
+  return data;
+};
+
+export const registerTimeApi = async (timeData) => {
+  const { data } = await axios.post("/times", timeData);
+  return data;
 };

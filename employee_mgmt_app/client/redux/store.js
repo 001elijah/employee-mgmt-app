@@ -12,6 +12,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import authReducer from "./slices/authSlice";
+import timesReducer from "./slices/timeSlice";
 
 const authPersistConfig = {
   key: "token",
@@ -24,6 +25,7 @@ const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    time: timesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
