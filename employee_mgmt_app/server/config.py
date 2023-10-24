@@ -15,5 +15,10 @@ class DevelopmentConfig():
     DEBUG = True
     SQLALCHEMY_ECHO = True
     PORT = os.environ['DEV_PORT']
-    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{db_username}:{db_password}@{db_server}:{db_port}/{db_database}'
+    if db_password:
+        SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{db_username}:{db_password}@{db_server}:{db_port}/{db_database}"
+    else:
+        SQLALCHEMY_DATABASE_URI = (
+            f"mysql+pymysql://{db_username}@{db_server}:{db_port}/{db_database}"
+        )
     SQLALCHEMY_TRACK_MODIFICATIONS = False

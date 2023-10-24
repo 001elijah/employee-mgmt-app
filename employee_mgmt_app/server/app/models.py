@@ -19,9 +19,9 @@ class Session(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     sign_in_time = db.Column(db.DateTime, nullable=False)
     sign_out_time = db.Column(db.DateTime)
-    user = db.relationship('User', back_populates='sessions')
+    user = db.relationship('User', backref='sessions')
 
-class Statuses(db.Model):
+class Status(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     status=db.Column(db.String(125),unique=True,nullable=False)
 
