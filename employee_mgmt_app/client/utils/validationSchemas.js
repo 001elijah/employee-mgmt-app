@@ -4,7 +4,10 @@ export const registrationValidationSchema = yup.object().shape({
   fullName: yup
     .string()
     .matches(/^([^0-9]*)$/, "Numbers are not allowed")
-    .matches(/^([A-Za-z-åäöøæéÅÄÖÉØÆ' ]*)$/, "One or more characters not allowed")
+    .matches(
+      /^([A-Za-z-åäöøæéÅÄÖÉØÆ' ]*)$/,
+      "One or more characters not allowed",
+    )
     .required("Full name is required"),
 
   email: yup
@@ -14,7 +17,7 @@ export const registrationValidationSchema = yup.object().shape({
       "E-mail address not valid",
     )
     .required("E-mail address is required"),
-    
+
   password: yup
     .string()
     .matches(

@@ -25,7 +25,7 @@ class Session(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     sign_in_time = db.Column(db.DateTime, nullable=False)
     sign_out_time = db.Column(db.DateTime)
-    user = db.relationship("User", backref="sessions")
+    user = db.relationship("User", backref="session_backref")
 
 
 class Status(db.Model):

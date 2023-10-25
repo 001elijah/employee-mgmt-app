@@ -7,28 +7,23 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import GoBack from "../components/GoBack";
-import { Ionicons } from "@expo/vector-icons";
-import { getTimeDifference } from "../utils/getTimeDifference";
+import ClockButton from "../components/ClockButton";
+import TimeItem from "../components/TimeItem";
 import { selectUserID } from "../redux/selectors/authSelectors";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTimes, registerTime } from "../redux/slices/timeSlice";
-import TimeItem from "../components/TimeItem";
 import { formatTime } from "../utils/formatTime";
-import { SetClockIn } from "../redux/slices/timeSlice";
+import { SetClockIn, SetClockInReadable } from "../redux/slices/timeSlice";
 
 const TimeTrackerScreen = () => {
   const userId = useSelector(selectUserID);
   const isClockedIn = useSelector((state) => state.time.isClockedIn);
-  console.log(isClockedIn);
+  const clockInReadable = useSelector((state) => state.time.clockInReadable);
 
   const dispatch = useDispatch();
   const { times } = useSelector((state) => state.time);
-  // console.log("times", times);
-  const [clockInTimestamp, setClockInTimestamp] = useState(null);
   const [showTotalTime, setShowTotalTime] = useState(false);
-  const [clockInReadable, setClockInReadable] = useState(null);
   const [clockOutReadable, setClockOutReadable] = useState(null);
-  const [clockOutTimestamp, setClockOutTimestamp] = useState(null);
   const [visibleRowsLimit, setVisibleRowsLimit] = useState(5);
   const [time, setTime] = useState(
     new Date().toLocaleTimeString(["se-SE"], {
@@ -46,9 +41,7 @@ const TimeTrackerScreen = () => {
 
     const currentTime = Date.now();
     const clockInReadable = formatTime(currentTime);
-    setClockOutTimestamp(null);
-    setClockInTimestamp(currentTime);
-    setClockInReadable(clockInReadable);
+    dispatch(SetClockInReadable(clockInReadable));
   };
 
   const onShowMoreTimes = () => {
@@ -58,10 +51,6 @@ const TimeTrackerScreen = () => {
   const onShowLessTimes = () => {
     setVisibleRowsLimit((visibleRowsLimit) => visibleRowsLimit - 5);
   };
-
-  // const formatTime = (time) => {
-  //   return time.slice(0, 5);
-  // };
 
   const onShowAllTimes = () => {
     if (times.length == visibleRowsLimit) {
@@ -74,10 +63,9 @@ const TimeTrackerScreen = () => {
   const handleClockOut = () => {
     dispatch(SetClockIn(false));
     setShowTotalTime(true);
+
     const currentTime = Date.now();
     const clockOutReadable = formatTime(currentTime);
-
-    setClockOutTimestamp(Date.now());
     setClockOutReadable(clockOutReadable);
 
     const date = new Date().toLocaleDateString("en-GB", {
@@ -131,49 +119,25 @@ const TimeTrackerScreen = () => {
         <Text className="text-xl  text-white">{time}</Text>
       </View>
 
-      <View className="flex-row h-[30vh] bg-white justify-center gap-2 px-5 mx-3  py-2 rounded-3xl z-10 shadow-inner ">
-        <TouchableOpacity
-          disabled={isClockedIn}
-          className={`${
-            isClockedIn
-              ? "opacity-40 h-52 rounded-[30px] flex-col items-center bg-[#4D91D5] w-1/2 justify-around "
-              : " rounded-[30px] h-52 flex-col items-center bg-[#4D91D5] w-1/2 justify-around "
-          } `}
-          onPress={() => handleClockIn()}
-        >
-          <View className="flex flex-col items-center">
-            <Ionicons name="checkmark-circle-outline" size={80} color="white" />
-            <Text className="text-white text-3xl font-semibold text-center">
-              Clock In
-            </Text>
-          </View>
-          <View className="">
-            <Text className="text-white text-2xl  text-center">
-              {!isClockedIn ? time : ""}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          disabled={!isClockedIn}
-          className={`${
-            isClockedIn
-              ? " rounded-[30px] h-52 flex-col items-center bg-[#EA4343] w-1/2 justify-around "
-              : "opacity-40 h-52 rounded-[30px] flex-col items-center bg-[#EA4343] w-1/2 justify-around "
-          } `}
-          onPress={() => handleClockOut()}
-        >
-          <View className="flex flex-col items-center">
-            <Ionicons name="close-circle-outline" size={80} color="white" />
-            <Text className="text-white text-3xl font-semibold text-center">
-              Clock Out
-            </Text>
-          </View>
-          <View className="">
-            <Text className="text-white text-2xl  text-center">
-              {isClockedIn ? time : ""}
-            </Text>
-          </View>
-        </TouchableOpacity>
+      <View className="flex-row h-[30vh] bg-white justify-center gap-2 px-4 mx-3  py-1 rounded-3xl z-10 shadow-inner ">
+        <ClockButton
+          disabledCondition={isClockedIn}
+          handleAction={handleClockIn}
+          iconName="checkmark-circle-outline"
+          label="Clock In"
+          bgColor="bg-[#4D91D5]"
+          time={time}
+          clockInReadable={clockInReadable}
+        />
+        <ClockButton
+          disabledCondition={!isClockedIn}
+          handleAction={handleClockOut}
+          iconName="close-circle-outline"
+          label="Clock Out"
+          bgColor="bg-[#EA4343]"
+          time={time}
+          clockInReadable={time}
+        />
       </View>
       <View
         style={styles.shadow}

@@ -62,6 +62,6 @@ const timeSlice = createSlice({
   },
 });
 
-export const { SetClockIn } = timeSlice.actions;
+export const { SetClockIn, SetClockInReadable } = timeSlice.actions;
 
 export default timeSlice.reducer;
