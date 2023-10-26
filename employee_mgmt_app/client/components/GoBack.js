@@ -9,7 +9,7 @@ const GoBack = ({ color }) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.goBack()}
-      className="absolute left-[15px]  z-10"
+      className="left-[10px]  z-10"
     >
       <Ionicons name="chevron-back-outline" size={40} color={color} />
     </TouchableOpacity>

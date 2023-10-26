@@ -1,9 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import DashboardCard from "../components/DashboardCard";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { selectToken } from "../redux/selectors/authSelectors";
-import { logoutUser } from "../redux/operations/authOperations";
-import { useDispatch, useSelector } from "react-redux";
+import HandleLogout from "../components/HandleLogout";
 
 const dashboardItems = [
   { id: 1, icon: "user", label: "Profile", screen: "HomeScreen" },
@@ -37,26 +34,14 @@ const dashboardItems = [
 ];
 
 function DashboardScreen() {
-  const dispatch = useDispatch();
-  const token = useSelector(selectToken);
-
-  const handleLogout = () => {
-    if (token) dispatch(logoutUser());
-  };
-
   return (
     <ScrollView className="mb-24">
       <View className=" flex-row mt-10 mb-4 justify-between">
-        <Text className="text-black font-bold text-4xl tracking-wider pl-4 ">
+        <Text className="text-black font-bold text-4xl tracking-wider pl-7">
           Dashboard
         </Text>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          className="mr-4"
-          onPress={handleLogout}
-        >
-          <Icon name="sign-out" size={40} color="black" />
-        </TouchableOpacity>
+
+        <HandleLogout />
       </View>
       <View className="flex-row flex-wrap justify-center">
         {dashboardItems.map((item) => (

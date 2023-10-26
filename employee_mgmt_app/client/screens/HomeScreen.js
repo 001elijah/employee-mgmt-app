@@ -9,6 +9,7 @@ import {
 import InformationField from "../components/InformationField";
 import GoBack from "../components/GoBack";
 import { capitalize } from "../utils/capitalize";
+import HandleLogout from "../components/HandleLogout";
 
 const HomeScreen = () => {
   const name = useSelector(selectUserName);

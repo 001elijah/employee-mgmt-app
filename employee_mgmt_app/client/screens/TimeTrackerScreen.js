@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTimes, registerTime } from "../redux/slices/timeSlice";
 import { formatTime } from "../utils/formatTime";
 import { SetClockIn, SetClockInReadable } from "../redux/slices/timeSlice";
+import Header from "../components/Header";
 
 const TimeTrackerScreen = () => {
   const userId = useSelector(selectUserID);
@@ -34,6 +35,7 @@ const TimeTrackerScreen = () => {
   const [currentDay, setCurrentDay] = useState("default", { weekday: "short" });
 
   const headers = ["Time In", "Time Out", "Date", "Status"];
+  console.log("they", times);
 
   const handleClockIn = () => {
     dispatch(SetClockIn(true));
@@ -109,12 +111,9 @@ const TimeTrackerScreen = () => {
 
   return (
     <ScrollView className="bg-[#4D91D5] h-full">
-      <View className="flex-row mt-10 justify-center">
-        <GoBack color="white" />
-        <Text className="text-3xl font-bold text-white ">Time Tracker</Text>
-      </View>
+      <Header title="TimeTracker" avatarbg="bg-gray-500" />
 
-      <View className="flex-col justify-center mb-8 items-center mt-3">
+      <View className="flex-col justify-center items-center p-3">
         <Text className="text-xl  text-white">{currentDay}</Text>
         <Text className="text-xl  text-white">{time}</Text>
       </View>

@@ -11,10 +11,22 @@ db_username = os.environ["DB_USERNAME"]
 db_password = os.environ["DB_PASSWORD"]
 
 
+print(db_server)
+print(db_port)
+print(db_database)
+print(db_username)
+print(db_password)
+
+
 class DevelopmentConfig:
     ENV = "development"
     DEBUG = True
     SQLALCHEMY_ECHO = True
     PORT = os.environ["DEV_PORT"]
-    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{db_username}:{db_password}@{db_server}:{db_port}/{db_database}"
+    if db_password:
+        SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{db_username}:{db_password}@{db_server}:{db_port}/{db_database}"
+    else:
+        SQLALCHEMY_DATABASE_URI = (
+            f"mysql+pymysql://{db_username}@{db_server}:{db_port}/{db_database}"
+        )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
