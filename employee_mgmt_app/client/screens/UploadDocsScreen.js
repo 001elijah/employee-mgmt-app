@@ -131,11 +131,11 @@ const UploadDocsScreen = () => {
       <View className="">
         <Header title="Documents" avatarbg="bg-blue-400" />
       </View>
-      <View className="bg-[#E7E5FF] h-full rounded-[25px]">
+      <View className="bg-[#E7E5FF] h-full rounded-[25px] items-center">
         <View className="flex-row">
           <TextInput
             placeholder="Search..."
-            className="bg-white rounded-[15px] h-10 w-80 ml-10 mt-10  pl-2 text-lg text-gray-500"
+            className="bg-white rounded-[15px] h-10 w-80  mt-10  pl-2 text-lg text-gray-500"
             onChangeText={(text) => setText(text)}
             value={text}
           ></TextInput>
@@ -148,7 +148,7 @@ const UploadDocsScreen = () => {
             </TouchableOpacity>
           )}
         </View>
-        <ScrollView className="mb-24">
+        <ScrollView className="mb-24 max-h-[70vh] m-2">
           <View className="flex flex-row justify-center  flex-wrap mt-5">
             {filteredData.length === 0 && (
               <Text className="text-center text-lg text-gray-700 mt-5 font-semibold">
@@ -167,8 +167,8 @@ const UploadDocsScreen = () => {
             ))}
           </View>
         </ScrollView>
-        <TouchableOpacity className="absolute bottom-[34%] right-0 ">
-          <Icon name="plus-circle" size={90} color="#444" className="" />
+        <TouchableOpacity className="m-[-45px] z-10 ">
+          <Icon name="plus-circle" size={100} color="#444" className="" />
           <View className="border-2 z-50"></View>
         </TouchableOpacity>
       </View>
