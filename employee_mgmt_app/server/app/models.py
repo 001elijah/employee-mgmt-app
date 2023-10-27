@@ -9,7 +9,6 @@ class User(db.Model):
     email = db.Column(db.String(320), unique=True, nullable=False)
     password = db.Column(db.String(300), nullable=False)
     role = db.Column(db.String(75), nullable=False)
-    sessions = db.relationship("Session", back_populates="user")
     times = db.relationship("Times", back_populates="employee")
 
 
@@ -57,3 +56,24 @@ class Times(db.Model):
     date = db.Column(db.String(70), nullable=False)
     employee = db.relationship("User", back_populates="times")
     status_rel = db.relationship("Status", back_populates="times")
+
+
+doc_role_association = db.Table(
+    "doc_role_association",
+    db.Column("upload_doc_id", db.Integer, db.ForeignKey("upload_docs.id")),
+    db.Column("role_id", db.Integer, db.ForeignKey("roles.id")),
+)
+
+
+class UploadDocs(db.Model):
+    __tablename__ = "upload_docs"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(150), nullable=False)
+    file = db.Column(db.String(300), nullable=False)
+    description = db.Column(db.String(300), nullable=False)
+    file_path = db.Column(db.String(300), nullable=False, unique=True)
+    file_type = db.Column(db.String(150), nullable=False)
+    file_size = db.Column(db.Integer, nullable=False)
+    employee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user = db.relationship("User", backref=db.backref("documents", lazy=True))
+    roles = db.relationship("Role", secondary="doc_role_association", backref="docs")
