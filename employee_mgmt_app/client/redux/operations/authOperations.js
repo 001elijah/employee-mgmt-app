@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk(
     try {
       const data = await registerUserApi(userData);
 
-      const userRole = userData.role;
+      const userRole = userData.role_id;
 
       const alertMessage1 =
         "Your account has been created! You may proceed to login now.";
@@ -23,9 +23,9 @@ export const registerUser = createAsyncThunk(
       const alertMessage2 =
         "An e-mail with a password for the new account has been sent to the employee.";
 
-      if (userRole === "admin") {
+      if (userRole === 3) {
         Alert.alert("Registration successful", alertMessage1);
-      } else if (userRole === "subadmin" || userRole === "staff") {
+      } else if (userRole === 1 || userRole === 2) {
         Alert.alert("Account has been created!", alertMessage2);
       }
 

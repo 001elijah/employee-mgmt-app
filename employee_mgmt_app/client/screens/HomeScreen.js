@@ -11,10 +11,18 @@ import GoBack from "../components/GoBack";
 import { capitalize } from "../utils/capitalize";
 import HandleLogout from "../components/HandleLogout";
 
+const displayrole = (role_id) => 
+{
+  if (role_id === 0) { return "n/a"; }
+  else if (role_id === 1) { return "Staff member"; } 
+  else if (role_id === 2) { return "Sub-admin"; } 
+  else if (role_id === 3) { return "Administrator"; } 
+};
+
 const HomeScreen = () => {
-  const name = useSelector(selectUserName);
+  const full_name = useSelector(selectUserName);
   const email = useSelector(selectEmail);
-  const role = useSelector(selectUserRole);
+  const role_id = useSelector(selectUserRole);
 
   return (
     <>
@@ -29,15 +37,16 @@ const HomeScreen = () => {
 
         <View className="mt-[50px] w-36 h-36 bg-[#4D91D5] rounded-full items-center justify-center shadow-md shadow-black">
           <Text className="font-semibold text-6xl text-white">
-            {name ? capitalize(name.charAt(0)) : ""}
+            {full_name ? capitalize(full_name.charAt(0)) : ""}
           </Text>
         </View>
       </View>
 
       <View className="mt-4 px-4">
-        <InformationField title="Full Name" value={capitalize(name)} />
+        <InformationField title="Full name" value={full_name} />
         <InformationField title="Email" value={email} />
-        <InformationField title="Role" value={role} />
+        <InformationField title="Role" value={displayrole(role_id)} />
+        <InformationField title="Company" value="" />
       </View>
     </>
   );

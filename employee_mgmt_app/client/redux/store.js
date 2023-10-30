@@ -17,7 +17,7 @@ import timesReducer from "./slices/timeSlice";
 const authPersistConfig = {
   key: "token",
   storage: AsyncStorage,
-  whitelist: ["email", "username", "role", "token"],
+  whitelist: ["email", "username", "role_id", "token"],
 };
 
 const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);

@@ -92,7 +92,7 @@ export const DashboardStack = () => {
 
 const Home = ({ navigation }) => {
   const isAuthorized = useSelector(selectIsAuth);
-  const role = useSelector(selectUserRole);
+  const role_id = useSelector(selectUserRole);
 
   useEffect(() => {
     !isAuthorized && navigation.replace("Auth");
@@ -169,7 +169,7 @@ const Home = ({ navigation }) => {
           tabBarShowLabel: false,
         }}
       />
-      {/* {role !== "staff" && (
+      {/* {role_id !== 1 && (
         <Tab.Screen
           name="AddEmployeeScreen"
           component={AddEmployeeScreen}

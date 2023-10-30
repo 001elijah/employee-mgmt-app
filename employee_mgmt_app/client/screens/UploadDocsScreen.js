@@ -152,7 +152,7 @@ const UploadDocsScreen = () => {
           <View className="flex flex-row justify-center  flex-wrap mt-5">
             {filteredData.length === 0 && (
               <Text className="text-center text-lg text-gray-700 mt-5 font-semibold">
-                Inga dokument hittades...
+                No matches...
               </Text>
             )}
             {filteredData.map((doc) => (

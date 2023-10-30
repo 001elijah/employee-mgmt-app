@@ -25,7 +25,7 @@ const RegistrationScreen = ({ navigation }) => {
       username: values.fullName.replace(/\s+/g, " ").trim(),
       email: values.email.trim().toLowerCase(),
       password: values.password,
-      role: "admin",
+      role_id: 3,
     };
     dispatch(registerUser(newUserData));
 

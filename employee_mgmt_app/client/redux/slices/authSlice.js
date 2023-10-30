@@ -13,7 +13,7 @@ const authSlice = createSlice({
     token: null,
     username: null,
     email: null,
-    role: null,
+    role_id: null,
     error: null,
   },
   extraReducers: (builder) => {

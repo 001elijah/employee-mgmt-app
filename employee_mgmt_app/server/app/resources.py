@@ -21,7 +21,7 @@ class Signup(Resource):
         username = data["username"]
         password = data["password"]
         email = data["email"]
-        role = data["role"]
+        role_id = data["role_id"]
         hashed_password = hash_password(password)
         user = User.query.filter_by(email=email).first()
 
@@ -31,7 +31,7 @@ class Signup(Resource):
 
         else:
             new_user = User(
-                username=username, email=email, password=hashed_password, role=role
+                username=username, email=email, password=hashed_password, role_id=role_id
             )
         db.session.add(new_user)
         db.session.commit()
@@ -62,7 +62,7 @@ class Login(Resource):
             "id": user.id,
             "email": user.email,
             "username": user.username,
-            "role": user.role,
+            "role_id": user.role_id,
             "token": token,
         }, 200
 

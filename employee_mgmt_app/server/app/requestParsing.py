@@ -9,7 +9,7 @@ signup_parser.add_argument(
     "password", type=str, required=True, help="Password is required"
 )
 signup_parser.add_argument("email", type=str, required=True, help="Email is required")
-signup_parser.add_argument("role", type=str, required=True, help="Role is required")
+signup_parser.add_argument("role_id", type=int, required=True, help="Role ID is required")
 
 
 login_parser = reqparse.RequestParser()

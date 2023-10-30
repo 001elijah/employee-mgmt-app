@@ -35,7 +35,8 @@ const TimeTrackerScreen = () => {
   const [currentDay, setCurrentDay] = useState("default", { weekday: "short" });
 
   const headers = ["Time In", "Time Out", "Date", "Status"];
-  console.log("they", times);
+  
+  //console.log("they", times);
 
   const handleClockIn = () => {
     dispatch(SetClockIn(true));

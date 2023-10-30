@@ -20,7 +20,7 @@ import { selectUserRole } from "../redux/selectors/authSelectors";
 
 const AddEmployeeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
-  const role = useSelector(selectUserRole);
+  const role_id = useSelector(selectUserRole);
 
   const [radioButtonGroupData, setRadioButtonGroupData] = useState(
     RADIO_BUTTON_GROUP_DATA,
@@ -46,8 +46,10 @@ const AddEmployeeScreen = ({ navigation }) => {
       username: values.fullName.replace(/\s+/g, " ").trim(),
       email: values.email.trim().toLowerCase(),
       password: values.password,
-      role: role === "admin" ? radioSelected?.value : "staff",
+      role_id: role_id === 3 ? radioSelected?.value : 1,
     };
+
+    //console.log(newUserData);
 
     dispatch(registerUser(newUserData));
 
@@ -66,7 +68,7 @@ const AddEmployeeScreen = ({ navigation }) => {
             Add employee
           </Text>
           <Text className="shrink mb-8 w-full text-xl text-slate-400">
-            {role === "admin"
+            {role_id === 3
               ? "Create accounts for your employees here"
               : "Create accounts for your employees (staff role only) here"}
           </Text>
@@ -106,7 +108,7 @@ const AddEmployeeScreen = ({ navigation }) => {
                   errors={errors}
                   touched={touched}
                 />
-                {role === "admin" && (
+                {role_id === 3 && (
                   <RadioButtonGroup
                     styling={"mb-8"}
                     data={radioButtonGroupData}
@@ -115,9 +117,9 @@ const AddEmployeeScreen = ({ navigation }) => {
                 )}
                 <TouchableOpacity
                   className={`${
-                    role === "subadmin" && "mt-8"
+                    role_id === 2 && "mt-8"
                   } flex-2 items-center justify-center w-full h-14 ${
-                    role === "admin"
+                    role_id === 3
                       ? isValid && radioSelected
                       : isValid &&
                         values.fullName.trim().length !== 0 &&
@@ -127,7 +129,7 @@ const AddEmployeeScreen = ({ navigation }) => {
                       : "bg-sky-200"
                   } rounded-xl`}
                   onPress={handleSubmit}
-                  disabled={!isValid || (role === "admin" && !radioSelected)}
+                  disabled={!isValid || (role_id === 3 && !radioSelected)}
                 >
                   <Text className="text-lg font-medium">Create</Text>
                 </TouchableOpacity>
