@@ -1,14 +1,11 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { useNavigation } from "@react-navigation/native";
 
-const DocumentItem = ({ icon, label, info1, info2, screen }) => {
-  const navigation = useNavigation();
-
+const DocumentItem = ({ icon, label, info1, info2, onPress }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(screen)}
-      className="flex-col  w-40 h-40 items-center p-3 bg-[#4D91D5] rounded-3xl justify-around m-2 shadow-md shadow-black m "
+      onPress={onPress}
+      className="flex-col w-40 h-40 items-center p-3 bg-[#4D91D5] rounded-3xl justify-around m-2 shadow-md shadow-black m"
     >
       <Icon name={icon} size={60} color="white" />
       <Text className="text-white text-xl font-semibold text-center ">

@@ -4,6 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
@@ -11,100 +12,102 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import DocumentItem from "../components/DocumentItem";
 import { useSelector } from "react-redux";
 import { selectUserName } from "../redux/selectors/authSelectors";
+import ModalContent from "../components/ModalContent";
 
 const documentData = [
   {
     icon: "clock-o",
     label: "Test",
-    screen: "DashboardScreen",
-    info1: "100kb",
-    info2: "Info 2",
+    title: "Recite for lunch",
+    description: "Recite for lunch, with the whole team",
+    uploadDate: "2021-05-05",
+    fileSize: "100kb",
+    fileType: ".Img",
     userName: "Erik",
   },
   {
     icon: "file-pdf-o",
     label: "Pdf upload",
-    screen: "DashboardScreen",
-    info1: "111kb",
-    info2: ".pdf",
+    fileSize: "111kb",
+    fileType: ".pdf",
     userName: "daniel",
+    title: "Bookkeeping",
+    description: "Bookkeeping for the month of May",
+    uploadDate: "2022-05-05",
   },
 
   {
     icon: "picture-o",
     label: "Image upload",
-    screen: "DashboardScreen",
-    info1: "100kb",
-    info2: ".img",
+    fileSize: "100kb",
+    fileType: ".img",
+    title: "Picture of the team",
+    description: "Picture of the team, taken at the office",
+    uploadDate: "2023-05-05",
   },
   {
     icon: "file-text-o",
     label: "Text uploadaass",
-    screen: "DashboardScreen",
-    info1: "56kb",
-    info2: ".txt",
+    fileSize: "56kb",
+    fileType: ".txt",
+    title: "Recite for lunch",
+    description: "Recite for lunch, with the whole team",
+    uploadDate: "2021-05-05",
   },
   {
     icon: "picture-o",
     label: "Image uploadee",
-    screen: "DashboardScreen",
-    info1: "100kb",
-    info2: ".img",
+    fileSize: "100kb",
+    fileType: ".img",
   },
   {
     icon: "file-text-o",
     label: "Text uploadrr",
-    screen: "DashboardScreen",
-    info1: "56kb",
-    info2: ".txt",
+    fileSize: "56kb",
+    fileType: ".txt",
   },
   {
     icon: "picture-o",
     label: "Image uploadsa",
-    screen: "DashboardScreen",
-    info1: "100kb",
-    info2: ".img",
+    fileSize: "100kb",
+    fileType: ".img",
   },
   {
     icon: "file-text-o",
     label: "Text uploads",
-    screen: "DashboardScreen",
-    info1: "56kb",
-    info2: ".txt",
+    fileSize: "56kb",
+    fileType: ".txt",
   },
   {
     icon: "picture-o",
     label: "Test1",
-    screen: "DashboardScreen",
-    info1: "100kb",
-    info2: ".img",
+    fileSize: "100kb",
+    fileType: ".img",
   },
   {
     icon: "file-text-o",
     label: "test2",
-    screen: "DashboardScreen",
-    info1: "56kb",
-    info2: ".txt",
+    fileSize: "56kb",
+    fileType: ".txt",
   },
   {
     icon: "picture-o",
     label: "Test4",
-    screen: "DashboardScreen",
-    info1: "100kb",
-    info2: ".img",
+    fileSize: "100kb",
+    fileType: ".img",
   },
   {
     icon: "file-text-o",
     label: "test3",
-    screen: "DashboardScreen",
-    info1: "56kb",
-    info2: ".txt",
+    fileSize: "56kb",
+    fileType: ".txt",
   },
 ];
 
 const UploadDocsScreen = () => {
   const [text, setText] = useState("");
   const [filteredData, setFilteredData] = useState(documentData);
+  const [selectedDocument, setSelectedDocument] = useState(false);
 
   const userName = useSelector(selectUserName);
   console.log("userName", userName);
@@ -160,13 +163,24 @@ const UploadDocsScreen = () => {
                 key={doc.label}
                 icon={doc.icon}
                 label={doc.label}
-                info1={doc.info1}
-                info2={doc.info2}
-                screen={doc.screen}
+                info1={doc.fileSize}
+                info2={doc.fileType}
+                onPress={() => setSelectedDocument(doc)}
               />
             ))}
           </View>
         </ScrollView>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={!!selectedDocument}
+          onRequestClose={() => setSelectedDocument(null)}
+        >
+          <ModalContent
+            document={selectedDocument}
+            onClose={() => setSelectedDocument(null)}
+          />
+        </Modal>
         <TouchableOpacity className="m-[-45px] z-10 ">
           <Icon name="plus-circle" size={100} color="#444" className="" />
           <View className="border-2 z-50"></View>
