@@ -11,18 +11,23 @@ class User(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=False)
     # sessions = db.relationship("Session", back_populates="user")
     times = db.relationship("Times", back_populates="employee")
+    documents = db.relationship("UploadDocs", back_populates="user")
 
 
 class Role(db.Model):
     __tablename__ = "roles"
     id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     role = db.Column(db.String(75), unique=True, nullable=False)
+
 
 class Company(db.Model):
     __tablename__ = "companies"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180), unique=True, nullable=False)
-    company_admin = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)
+    company_admin = db.Column(
+        db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False
+    )
 
 
 class Session(db.Model):
@@ -82,7 +87,7 @@ class UploadDocs(db.Model):
     file_size_kb = db.Column(db.Integer, nullable=False)
     employee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     privilege_lvl = db.Column(db.Integer, nullable=False)
-    user = db.relationship("User", backref=db.backref("documents", lazy=True))
+    user = db.relationship("User", back_populates="documents")
 
 
 # CREATE DATABASE IF NOT EXISTS `employee-mgmt-app` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;

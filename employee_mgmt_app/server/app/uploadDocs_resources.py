@@ -24,11 +24,14 @@ def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@upload_docs_ns.route("/getdocs/<int:employee_id>")
+from sqlalchemy.orm import joinedload
+
+
+@upload_docs_ns.route("/getdocs")
 class GetDocuments(Resource):
     @upload_docs_ns.marshal_with(uploadDocs_model)
-    def get(self, employee_id):
-        docs = UploadDocs.query.filter_by(employee_id=employee_id).all()
+    def get(self):
+        docs = UploadDocs.query.options(joinedload(UploadDocs.user)).all()
 
         if not docs:
             print("No documents found")
@@ -42,8 +45,10 @@ class GetDocuments(Resource):
                 "description": doc.description,
                 "file_path": doc.file_path,
                 "file_type": doc.file_type,
-                "file_size": doc.file_size,
+                "file_size_kb": doc.file_size_kb,
                 "employee_id": doc.employee_id,
+                "privilege_lvl": doc.privilege_lvl,
+                "username": doc.user.username,
             }
             for doc in docs
         ]
@@ -87,7 +92,7 @@ class SimpleUpload(Resource):
                 description=description,
                 file=filename,
                 file_type=file_type,
-                file_size=file_size,
+                file_size_kb=file_size,
                 file_path=filepath,
                 employee_id=employee_id,
                 privilege_lvl=privilege_lvl,
@@ -98,4 +103,5 @@ class SimpleUpload(Resource):
 
             return new_doc, 201
         except Exception as e:
+            print("error", e)
             return {"message": str(e)}, 500

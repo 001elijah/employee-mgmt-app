@@ -21,7 +21,7 @@ const Auth = ({ navigation }) => {
   }, [isAuthorized]);
 
   return (
-    <Stack.Navigator initialRouteName="RegistrationScreen">
+    <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}

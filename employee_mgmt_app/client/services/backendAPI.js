@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // axios.defaults.baseURL = "https://employeeapp.luday.xyz";
-axios.defaults.baseURL = "https://3fce-2-248-194-22.ngrok-free.app";
+axios.defaults.baseURL = "https://03ee-90-227-148-151.ngrok-free.app";
 
 const token = {
   set(token) {
@@ -45,5 +45,10 @@ export const fetchTimesApi = async (employeeId) => {
 
 export const registerTimeApi = async (timeData) => {
   const { data } = await axios.post("/times", timeData);
+  return data;
+};
+
+export const fetchDocumentsApi = async (employeeId) => {
+  const { data } = await axios.get(`/upload_docs/getdocs`);
   return data;
 };

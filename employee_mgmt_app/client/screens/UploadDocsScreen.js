@@ -10,124 +10,46 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Icon from "react-native-vector-icons/FontAwesome";
 import DocumentItem from "../components/DocumentItem";
-import { useSelector } from "react-redux";
-import { selectUserName } from "../redux/selectors/authSelectors";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUserName, selectUserID } from "../redux/selectors/authSelectors";
 import ModalContent from "../components/ModalContent";
-
-const documentData = [
-  {
-    icon: "clock-o",
-    label: "Test",
-    title: "Recite for lunch",
-    description: "Recite for lunch, with the whole team",
-    uploadDate: "2021-05-05",
-    fileSize: "100kb",
-    fileType: ".Img",
-    userName: "Erik",
-  },
-  {
-    icon: "file-pdf-o",
-    label: "Pdf upload",
-    fileSize: "111kb",
-    fileType: ".pdf",
-    userName: "daniel",
-    title: "Bookkeeping",
-    description: "Bookkeeping for the month of May",
-    uploadDate: "2022-05-05",
-  },
-
-  {
-    icon: "picture-o",
-    label: "Image upload",
-    fileSize: "100kb",
-    fileType: ".img",
-    title: "Picture of the team",
-    description: "Picture of the team, taken at the office",
-    uploadDate: "2023-05-05",
-  },
-  {
-    icon: "file-text-o",
-    label: "Text uploadaass",
-    fileSize: "56kb",
-    fileType: ".txt",
-    title: "Recite for lunch",
-    description: "Recite for lunch, with the whole team",
-    uploadDate: "2021-05-05",
-  },
-  {
-    icon: "picture-o",
-    label: "Image uploadee",
-    fileSize: "100kb",
-    fileType: ".img",
-  },
-  {
-    icon: "file-text-o",
-    label: "Text uploadrr",
-    fileSize: "56kb",
-    fileType: ".txt",
-  },
-  {
-    icon: "picture-o",
-    label: "Image uploadsa",
-    fileSize: "100kb",
-    fileType: ".img",
-  },
-  {
-    icon: "file-text-o",
-    label: "Text uploads",
-    fileSize: "56kb",
-    fileType: ".txt",
-  },
-  {
-    icon: "picture-o",
-    label: "Test1",
-    fileSize: "100kb",
-    fileType: ".img",
-  },
-  {
-    icon: "file-text-o",
-    label: "test2",
-    fileSize: "56kb",
-    fileType: ".txt",
-  },
-  {
-    icon: "picture-o",
-    label: "Test4",
-    fileSize: "100kb",
-    fileType: ".img",
-  },
-  {
-    icon: "file-text-o",
-    label: "test3",
-    fileSize: "56kb",
-    fileType: ".txt",
-  },
-];
+import { fetchDocuments } from "../redux/slices/documentsSlice";
 
 const UploadDocsScreen = () => {
+  const dispatch = useDispatch();
+  const documents = useSelector((state) => state.document.documents);
+  const userId = useSelector(selectUserID);
+
   const [text, setText] = useState("");
-  const [filteredData, setFilteredData] = useState(documentData);
+  const [filteredData, setFilteredData] = useState([]);
   const [selectedDocument, setSelectedDocument] = useState(false);
 
   const userName = useSelector(selectUserName);
   console.log("userName", userName);
+  console.log("documents", documents);
+  console.log("userId", userId);
+
+  useEffect(() => {
+    dispatch(fetchDocuments(userId));
+  }, [dispatch, userId]);
+
   useEffect(() => {
     if (text === "") {
-      setFilteredData(documentData);
+      setFilteredData(documents);
     } else {
-      const filteredData = documentData.filter((doc) => {
-        const searchText = text.toLowerCase();
-
+      const searchText = text.toLowerCase();
+      const filteredData = documents.filter((doc) => {
         return (
-          doc.label.toLowerCase().includes(searchText) ||
-          doc.info1.toLowerCase().includes(searchText) ||
-          doc.info2.toLowerCase().includes(searchText) ||
-          (doc.userName && doc.userName.toLowerCase().includes(searchText))
+          doc.title.toLowerCase().includes(searchText) ||
+          doc.description.toLowerCase().includes(searchText) ||
+          (doc.file_type && doc.file_type.toLowerCase().includes(searchText)) ||
+          (doc.file_size && doc.file_size.toLowerCase().includes(searchText)) ||
+          (doc.username && doc.username.toLowerCase().includes(searchText))
         );
       });
       setFilteredData(filteredData);
     }
-  }, [text]);
+  }, [text, documents]);
 
   return (
     <View className="bg-[#4D91D5]">
@@ -153,21 +75,26 @@ const UploadDocsScreen = () => {
         </View>
         <ScrollView className="mb-24 max-h-[70vh] m-2">
           <View className="flex flex-row justify-center  flex-wrap mt-5">
-            {filteredData.length === 0 && (
+            {Array.isArray(filteredData) && filteredData.length === 0 && (
               <Text className="text-center text-lg text-gray-700 mt-5 font-semibold">
                 No matches...
               </Text>
             )}
-            {filteredData.map((doc) => (
-              <DocumentItem
-                key={doc.label}
-                icon={doc.icon}
-                label={doc.label}
-                info1={doc.fileSize}
-                info2={doc.fileType}
-                onPress={() => setSelectedDocument(doc)}
-              />
-            ))}
+            {Array.isArray(filteredData) &&
+              filteredData.map((doc) => (
+                <DocumentItem
+                  key={doc.id}
+                  icon={
+                    doc.file_type === "png" || doc.file_type === "jpg"
+                      ? "picture-o"
+                      : "file-pdf-o"
+                  }
+                  label={doc.title}
+                  info1={doc.file_size_kb}
+                  info2={doc.file_type}
+                  onPress={() => setSelectedDocument(doc)}
+                />
+              ))}
           </View>
         </ScrollView>
         <Modal
@@ -181,7 +108,7 @@ const UploadDocsScreen = () => {
             onClose={() => setSelectedDocument(null)}
           />
         </Modal>
-        <TouchableOpacity className="m-[-45px] z-10 ">
+        <TouchableOpacity className="m-[-95px] z-10 ">
           <Icon name="plus-circle" size={100} color="#444" className="" />
           <View className="border-2 z-50"></View>
         </TouchableOpacity>

@@ -1,15 +1,13 @@
-// ModalContent.js
-
 import React from "react";
 import { View, Text, TouchableOpacity, Button } from "react-native";
+import handleDownload from "../utils/handleDownload";
 
 const ModalContent = ({ document, onClose }) => {
   if (!document) return null;
 
-  const handleDownload = () => {
-    alert("Downloaded");
-  };
-
+  console.log("document", document);
+  console.log("document.localFilePath", document.file_path);
+  console.log("document.title", document.title);
   return (
     <View className="flex justify-center items-center bg-stone-500/80 h-full">
       <View className="p-6 m-3 bg-[#E7E5FF] rounded-lg shadow-lg ">
@@ -32,17 +30,17 @@ const ModalContent = ({ document, onClose }) => {
           <View className="flex-row">
             <View className="flex-row w-1/2">
               <Text className="font-semibold">File size:</Text>
-              <Text className="ml-2">{document.fileSize}</Text>
+              <Text className="ml-2">{document.file_size_kb}kb</Text>
             </View>
             <View className="flex-row">
               <Text className="ml-4 font-semibold">File type:</Text>
-              <Text className="ml-2">{document.fileType}</Text>
+              <Text className="ml-2">.{document.file_type}</Text>
             </View>
           </View>
           <View className="flex-row ">
             <View className="w-1/2">
               <Text className="font-semibold">Uploaded by:</Text>
-              <Text className="">{document.userName}</Text>
+              <Text className="">{document.username}</Text>
             </View>
             <View className="">
               <Text className="ml-4 font-semibold">Uploaded date:</Text>
@@ -52,9 +50,9 @@ const ModalContent = ({ document, onClose }) => {
         </View>
         <TouchableOpacity
           className="bg-blue-700 text-white rounded-full py-2 px-4 text-center hover:bg-indigo-700"
-          onPress={handleDownload}
+          onPress={() => handleDownload()}
         >
-          <Text className="text-lg font-semibold text-white">
+          <Text className="text-lg font-semibold text-white text-center">
             Download Document
           </Text>
         </TouchableOpacity>
