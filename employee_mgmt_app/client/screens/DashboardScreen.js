@@ -35,7 +35,7 @@ const dashboardItems = [
 
 function DashboardScreen() {
   return (
-    <ScrollView className="mb-24">
+    <ScrollView>
       <View className=" flex-row mt-10 mb-4 justify-between">
         <Text className="text-black font-bold text-4xl tracking-wider pl-7">
           Dashboard
