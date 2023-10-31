@@ -64,7 +64,23 @@ const ManageDocsTabs = () => {
         }}
       />
       <Tab.Screen name="Add" component={AddDocsScreen} />
-      <Tab.Screen name="Preview" component={PreviewDocsScreen} />
+      <Tab.Screen
+        name="Preview"
+        component={PreviewDocsScreen}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              className={`w-12 h-12 rounded-full ${
+                focused ? "bg-[#2578CC]" : "bg-[#FFF]"
+              } items-center justify-center`}
+            >
+              <MessageIcon fill={color} />
+            </View>
+          ),
+          title: "Messages",
+          tabBarShowLabel: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
