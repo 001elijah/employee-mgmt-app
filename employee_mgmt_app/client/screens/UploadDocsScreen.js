@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
-import Icon from "react-native-vector-icons/FontAwesome";
 import DocumentItem from "../components/DocumentItem";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserName, selectUserID } from "../redux/selectors/authSelectors";
@@ -108,12 +107,6 @@ const UploadDocsScreen = () => {
             onClose={() => setSelectedDocument(null)}
           />
         </Modal>
-
-        <TouchableOpacity className="m-[-95px] z-10">
-          <Icon name="plus-circle" size={105} color={'#0284c7'}/>
-        </TouchableOpacity>
-
-
       </View>
     </View>
   );

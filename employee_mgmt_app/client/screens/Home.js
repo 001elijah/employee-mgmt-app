@@ -4,7 +4,7 @@ import HomeScreen from "./HomeScreen";
 import HistoryScreen from "./HistoryScreen";
 import AddEmployeeScreen from "./AddEmployeeScreen";
 import HomeIcon from "../assets/icons/HomeIcon";
-import BookIcon from "../assets/icons/BookIcon";
+import Icon from "react-native-vector-icons/FontAwesome";
 import MessageIcon from "../assets/icons/MessageIcon";
 import DashboardScreen from "./DashboardScreen";
 import { Platform, View, Text } from "react-native";
@@ -20,6 +20,7 @@ import PaymentSystemScreen from "./PaymentSystemScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import AddDocsScreen from "./AddDocsScreen";
 import PreviewDocsScreen from "./PreviewDocsScreen";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -63,7 +64,20 @@ const ManageDocsTabs = () => {
           tabBarShowLabel: false,
         }}
       />
-      <Tab.Screen name="Add" component={AddDocsScreen} />
+      <Tab.Screen
+        name="Add"
+        component={AddDocsScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <TouchableOpacity className="m-[-69px] items-center">
+              <Icon name="plus-circle" size={105} color={"#2578CC"} />
+            </TouchableOpacity>
+          ),
+          title: "Home",
+          tabBarShowLabel: false,
+        }}
+      />
       <Tab.Screen
         name="Preview"
         component={PreviewDocsScreen}
