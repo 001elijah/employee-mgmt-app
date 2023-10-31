@@ -9,14 +9,20 @@ class User(db.Model):
     email = db.Column(db.String(320), unique=True, nullable=False)
     password = db.Column(db.String(300), nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=False)
-    sessions = db.relationship("Session", back_populates="user")
+    # sessions = db.relationship("Session", back_populates="user")
     times = db.relationship("Times", back_populates="employee")
 
 
 class Role(db.Model):
     __tablename__ = "roles"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     role = db.Column(db.String(75), unique=True, nullable=False)
+
+class Company(db.Model):
+    __tablename__ = "companies"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(180), unique=True, nullable=False)
+    company_admin = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)
 
 
 class Session(db.Model):
@@ -59,46 +65,28 @@ class Times(db.Model):
     status_rel = db.relationship("Status", back_populates="times")
 
 
-doc_role_association = db.Table(
-    "doc_role_association",
-    db.Column("upload_doc_id", db.Integer, db.ForeignKey("upload_docs.id")),
-    db.Column("role_id", db.Integer, db.ForeignKey("roles.id")),
-)
+class Privileges(db.Model):
+    __tablename__ = "privileges"
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(150), unique=True, nullable=False)
 
 
 class UploadDocs(db.Model):
     __tablename__ = "upload_docs"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(150), nullable=False)
-    file = db.Column(db.String(300), nullable=False)
     description = db.Column(db.String(300), nullable=False)
-    file_path = db.Column(db.String(300), nullable=False, unique=True)
+    file = db.Column(db.String(300), nullable=False)
     file_type = db.Column(db.String(150), nullable=False)
-    file_size = db.Column(db.Integer, nullable=False)
+    file_path = db.Column(db.String(300), nullable=False, unique=True)
+    file_size_kb = db.Column(db.Integer, nullable=False)
     employee_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    privilege_lvl = db.Column(db.Integer, nullable=False)
     user = db.relationship("User", backref=db.backref("documents", lazy=True))
-    roles = db.relationship("Role", secondary="doc_role_association", backref="docs")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # CREATE DATABASE IF NOT EXISTS `employee-mgmt-app` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 # USE `employee-mgmt-app`;
-
 
 
 # INSERT INTO `roles` (`id`, `role`) VALUES
@@ -106,7 +94,6 @@ class UploadDocs(db.Model):
 # (1, 'staff'),
 # (2, 'subadmin'),
 # (3, 'admin');
-
 
 
 # INSERT INTO `status` (`id`, `status`) VALUES

@@ -105,6 +105,7 @@ const Home = ({ navigation }) => {
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#858EA9",
         tabBarStyle: {
+          display: 'none',    //comment out to display again
           position: "absolute",
           height: 84,
           paddingTop: 3,

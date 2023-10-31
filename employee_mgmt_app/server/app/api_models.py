@@ -32,3 +32,19 @@ times_model = api.model(
         "status_id": fields.Integer(required=True),
     },
 )
+
+
+uploadDocs_model = api.model(
+    "UploadDocs",
+    {
+        "id": fields.Integer(readonly=True),
+        "title": fields.String(required=True),
+        "description": fields.String(required=True),
+        "file": fields.String(required=True),
+        "file_path": fields.String(required=False),
+        "file_type": fields.String(required=False),
+        "file_size": fields.Integer(required=False),
+        "employee_id": fields.Integer(required=True),
+        "privilege_lvl": fields.Integer(required=True),
+    },
+)
