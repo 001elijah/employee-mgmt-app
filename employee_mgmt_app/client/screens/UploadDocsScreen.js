@@ -108,10 +108,12 @@ const UploadDocsScreen = () => {
             onClose={() => setSelectedDocument(null)}
           />
         </Modal>
-        <TouchableOpacity className="m-[-95px] z-10 ">
-          <Icon name="plus-circle" size={100} color="#444" className="" />
-          <View className="border-2 z-50"></View>
+
+        <TouchableOpacity className="m-[-95px] z-10">
+          <Icon name="plus-circle" size={105} color={'#0284c7'}/>
         </TouchableOpacity>
+
+
       </View>
     </View>
   );

@@ -17,18 +17,13 @@ class User(db.Model):
 class Role(db.Model):
     __tablename__ = "roles"
     id = db.Column(db.Integer, primary_key=True, autoincrement=False)
-    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
     role = db.Column(db.String(75), unique=True, nullable=False)
-
 
 class Company(db.Model):
     __tablename__ = "companies"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(180), unique=True, nullable=False)
-    company_admin = db.Column(
-        db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False
-    )
-
+    company_admin = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)
 
 class Session(db.Model):
     __tablename__ = "sessions"
