@@ -45,9 +45,26 @@ const ManageDocsTabs = () => {
         },
       }}
     >
-      <Tab.Screen name="UploadDocsScreen" component={UploadDocsScreen} />
-      <Tab.Screen name="AddDocsScreen" component={AddDocsScreen} />
-      <Tab.Screen name="PreviewDocsScreen" component={PreviewDocsScreen} />
+      <Tab.Screen
+        name="Upload"
+        component={UploadDocsScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <View
+              className={`w-12 h-12 rounded-full ${
+                focused ? "bg-[#2578CC]" : "bg-[#FFF]"
+              } items-center justify-center`}
+            >
+              <HomeIcon fill={color} />
+            </View>
+          ),
+          title: "Home",
+          tabBarShowLabel: false,
+        }}
+      />
+      <Tab.Screen name="Add" component={AddDocsScreen} />
+      <Tab.Screen name="Preview" component={PreviewDocsScreen} />
     </Tab.Navigator>
   );
 };
