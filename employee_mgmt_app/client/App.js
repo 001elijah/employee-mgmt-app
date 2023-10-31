@@ -41,7 +41,7 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home">
+          <Stack.Navigator initialRouteName="Auth">
             <Stack.Screen
               name="Auth"
               component={Auth}
